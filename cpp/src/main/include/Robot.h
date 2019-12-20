@@ -11,15 +11,23 @@
 
 #include <frc/TimedRobot.h>
 
-class Robot : public frc::TimedRobot {
- public:
-  void RobotInit() override;
-  void RobotPeriodic() override;
-  void AutonomousInit() override;
-  void AutonomousPeriodic() override;
-  void TeleopInit() override;
-  void TeleopPeriodic() override;
-  void TestPeriodic() override;
+#include "SubsystemManager.h"
+#include "utils/Looper/Looper.h"
 
- private:
+class Robot : public frc::TimedRobot {
+public:
+    void RobotInit() override;
+    void RobotPeriodic() override;  
+    void AutonomousInit() override;
+    void AutonomousPeriodic() override;
+    void TeleopInit() override;
+    void TeleopPeriodic() override;
+    void TestPeriodic() override;
+    void DisabledInit() override;
+    void DisabledPeriodic() override;
+
+private:
+    std::shared_ptr<SubsystemManager> mSubsystemManager;
+    Looper mEnabledLooper;
+    Looper mDisabledLooper;
 };

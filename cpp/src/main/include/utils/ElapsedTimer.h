@@ -1,3 +1,5 @@
+#pragma once
+
 #include "frc/Timer.h"
 
 class ElapsedTimer {

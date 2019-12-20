@@ -1,5 +1,7 @@
+#pragma once
+
 #include <mutex>
-#include <math>
+#include <math.h>
 #include "ElapsedTimer.h"
 
 class TimeoutTimer {
@@ -33,8 +35,7 @@ private:
     std::mutex mtx; 
 
     void SetFirstRun(bool firstRun) {
-        mtx.lock();
+        std::scoped_lock<std::mutex> lock(mtx);
         this->firstRun = firstRun;
-        mtx.unlock();
     };
 };
