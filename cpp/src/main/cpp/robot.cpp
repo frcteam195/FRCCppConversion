@@ -13,7 +13,9 @@ void Robot::RobotInit() {
     }
 }
 
-void Robot::RobotPeriodic() {}
+void Robot::RobotPeriodic() {
+
+}
 
 void Robot::AutonomousInit() {
 
