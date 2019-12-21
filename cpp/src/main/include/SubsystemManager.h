@@ -13,7 +13,7 @@ public:
     static std::shared_ptr<SubsystemManager> GetInstance() {
         //std::initializer_list<Subsystem> subsystemList
         if(!mInstance) {
-            mInstance = std::make_shared<SubsystemManager>(new SubsystemManager());
+            mInstance = std::make_shared<SubsystemManager>();
         }
         // for(auto elem : subsystemList) {
         //     mAllSubsystems.push_back(elem);
@@ -24,7 +24,7 @@ public:
 
     bool CheckSystemsPassDiagnostics() {
 		bool retVal = true;
-        for (auto & subsystem : mAllSubsystems) {
+        for (Subsystem & subsystem : mAllSubsystems) {
             retVal &= subsystem.RunDiagnostics();
         }
 		return retVal;
@@ -35,7 +35,7 @@ public:
     };
 
     void RegisterEnabledLoops(Looper & enabledLooper) {
-        for(auto subsystem : mAllSubsystems) {
+        for(Subsystem & subsystem : mAllSubsystems) {
             subsystem.RegisterEnabledLoops(*this);
         }
         //TODO: Check to make sure going out of scope here doesn't hurt us. Otherwise will need shared_ptr
@@ -67,32 +67,32 @@ private:
         };
 
         void OnFirstStart(double timestamp) override {
-            for (auto & loop : mLoops) {
+            for (Loop & loop : mLoops) {
                 loop.OnFirstStart(timestamp);
             }
 		};
 
         void OnStart(double timestamp) override {
-            for (auto & loop : mLoops) {
+            for (Loop & loop : mLoops) {
                 loop.OnStart(timestamp);
             }
         };
 
         void OnLoop(double timestamp) override {
-            for(auto subsystem : mAllSubsystems) {
+            for(Subsystem & subsystem : mAllSubsystems) {
                 subsystem.ReadPeriodicInputs();
             }
 
-            for (auto & loop : mLoops) {
+            for (Loop & loop : mLoops) {
                 loop.OnLoop(timestamp);
             }
 
-            for(auto subsystem : mAllSubsystems) {
+            for(Subsystem & subsystem : mAllSubsystems) {
                 subsystem.WritePeriodicOutputs();
             }
 
 			if (mCriticalCheckTimeout.IsTimedOut()) {
-                for(auto subsystem : mAllSubsystems) {
+                for(auto & subsystem : mAllSubsystems) {
                     subsystem.IsSystemFaulted();
                 }
 				mCriticalCheckTimeout.Reset();
@@ -105,7 +105,7 @@ private:
         };
 
         void OnStop(double timestamp) override {
-            for (auto & loop : mLoops) {
+            for (Loop & loop : mLoops) {
                 loop.OnStop(timestamp);
             }
         };
@@ -129,16 +129,16 @@ private:
         void OnStart(double timestamp) override {};
 
         void OnLoop(double timestamp) override {
-            for(auto subsystem : mAllSubsystems) {
+            for(Subsystem & subsystem : mAllSubsystems) {
                 subsystem.ReadPeriodicInputs();
             }
 
-            for(auto subsystem : mAllSubsystems) {
+            for(Subsystem & subsystem : mAllSubsystems) {
                 subsystem.WritePeriodicOutputs();
             }
 
 			if (mCriticalCheckTimeout.IsTimedOut()) {
-                for(auto subsystem : mAllSubsystems) {
+                for(Subsystem & subsystem : mAllSubsystems) {
                     subsystem.IsSystemFaulted();
                 }
 				mCriticalCheckTimeout.Reset();
