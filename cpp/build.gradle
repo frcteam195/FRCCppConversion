@@ -48,6 +48,10 @@ dependencies {
 model {
     components {
         frcUserProgram(NativeExecutableSpec) {
+            binaries.all {
+                cppCompiler.args << '-std=c++17' << '-Wall' << '-O3'
+            }
+
             targetPlatform wpi.platforms.roborio
             targetPlatform wpi.platforms.desktop
 
