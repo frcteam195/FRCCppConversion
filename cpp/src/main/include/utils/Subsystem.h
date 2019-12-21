@@ -13,5 +13,5 @@ public:
 
     void RegisterEnabledLoops(ILooper & enabledLooper) {};
 
-    virtual void Stop();
+    virtual void Stop() = 0;
 };

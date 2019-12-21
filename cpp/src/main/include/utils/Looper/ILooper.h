@@ -4,5 +4,5 @@
 
 class ILooper {
 public:
-    virtual void Register(Loop & loop);
+    virtual void Register(Loop & loop) = 0;
 };

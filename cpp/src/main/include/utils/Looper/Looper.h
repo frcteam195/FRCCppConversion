@@ -14,7 +14,7 @@
 
 class Looper : public ILooper, public Reportable {
 public:
-    static constexpr units::second_t kPeriod = 0_s;
+    static constexpr units::second_t kPeriod = K_LOOPER_DT;
 
     Looper()
     : notifier_([this]() {
@@ -27,8 +27,8 @@ public:
         if (running_) {
             double now = frc::Timer::GetFPGATimestamp();
             try {
-                for (Loop & loop : loops_) {
-                    loop.OnLoop(now);
+                for (Loop* loop : loops_) {
+                    loop->OnLoop(now);
                 }
             }
             catch (std::exception &ex) {
@@ -45,7 +45,7 @@ public:
 
     void Register(Loop & loop) override {
         std::scoped_lock<std::mutex> lock(mtx);
-        loops_.push_back(loop);
+        loops_.push_back(&loop);
     }
 
     void Start() {
@@ -55,8 +55,8 @@ public:
                 if (isFirstStart) {
                     timestamp_ = frc::Timer::GetFPGATimestamp();
                     try {
-                        for (Loop & loop : loops_) {
-                            loop.OnFirstStart(timestamp_);
+                        for (Loop* loop : loops_) {
+                            loop->OnFirstStart(timestamp_);
                         }
                     }
                     catch (std::exception &ex) {
@@ -65,8 +65,8 @@ public:
                 }
                 timestamp_ = frc::Timer::GetFPGATimestamp();
                 try {
-                    for (Loop & loop : loops_) {
-                        loop.OnStart(timestamp_);
+                    for (Loop* loop : loops_) {
+                        loop->OnStart(timestamp_);
                     }
                 }
                 catch (std::exception &ex) {
@@ -88,8 +88,8 @@ public:
             running_ = false;
             timestamp_ = frc::Timer::GetFPGATimestamp();
             try {
-                for (Loop & loop : loops_) {
-                    loop.OnStop(timestamp_);
+                for (Loop* loop : loops_) {
+                    loop->OnStop(timestamp_);
                 }
             }
             catch (std::exception &ex) {
@@ -104,7 +104,7 @@ public:
 
 private:
     bool running_;
-    std::vector<Loop> loops_;
+    std::vector<Loop*> loops_;
     frc::Notifier notifier_;
     double timestamp_;
     double dt_;

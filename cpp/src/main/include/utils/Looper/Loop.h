@@ -4,9 +4,9 @@
 
 class Loop {
 public:
-    virtual void OnFirstStart(double timestamp);
-    virtual void OnStart(double timestamp);
-    virtual void OnStop(double timestamp);
-    virtual void OnLoop(double timestamp);
-    virtual std::string GetName();
+    virtual void OnFirstStart(double timestamp) = 0;
+    virtual void OnStart(double timestamp) = 0;
+    virtual void OnStop(double timestamp) = 0;
+    virtual void OnLoop(double timestamp) = 0;
+    virtual std::string GetName() = 0;
 };
