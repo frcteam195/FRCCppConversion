@@ -1,13 +1,10 @@
 #include "Robot.hpp"
-#include <frc/livewindow/LiveWindow.h>
-#include <iostream>
-
 
 void Robot::RobotInit() {
     try {
         frc::LiveWindow::GetInstance()->DisableAllTelemetry();
 
-        mSubsystemManager = SubsystemManager::getInstance();
+        mSubsystemManager = SubsystemManager::getInstance({Drive::getInstance()});
 
         mSubsystemManager->registerEnabledLoops(mEnabledLooper);
         mSubsystemManager->registerDisabledLoops(mDisabledLooper);

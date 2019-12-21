@@ -7,11 +7,13 @@
 
 class Subsystem : public Reportable, public CriticalSystemStatus, public DiagnosableSubsystem {
 public:
-    void readPeriodicInputs() {};
-    void writePeriodicOutputs() {};
-    void zeroSensors() {};
+    virtual void readPeriodicInputs() {};
+    virtual void writePeriodicOutputs() {};
+    virtual void zeroSensors() {};
 
-    void registerEnabledLoops(ILooper & enabledLooper) {};
+    virtual void registerEnabledLoops(ILooper & enabledLooper) {};
 
     virtual void stop() = 0;
+
+    virtual ~Subsystem() = default;
 };

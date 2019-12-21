@@ -8,11 +8,14 @@
 #pragma once
 
 #include <string>
-
+#include <frc/livewindow/LiveWindow.h>
+#include <iostream>
 #include <frc/TimedRobot.h>
 
 #include "SubsystemManager.hpp"
 #include "utils/Looper/Looper.hpp"
+
+#include "subsystems/Drive.hpp"
 
 class Robot : public frc::TimedRobot {
 public:
@@ -27,7 +30,7 @@ public:
     void DisabledPeriodic() override;
 
 private:
-    std::shared_ptr<SubsystemManager> mSubsystemManager;
+    SubsystemManager* mSubsystemManager;
     Looper mEnabledLooper;
     Looper mDisabledLooper;
 };

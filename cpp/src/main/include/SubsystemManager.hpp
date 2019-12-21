@@ -12,9 +12,7 @@
 
 class SubsystemManager : public ILooper {
 public:
-    static std::shared_ptr<SubsystemManager> getInstance();
-
-    SubsystemManager();
+    static SubsystemManager* getInstance(std::initializer_list<Subsystem*> subsystemList);
 
     bool checkSystemsPassDiagnostics();
 
@@ -25,7 +23,9 @@ public:
     void registerDisabledLoops(Looper & disabledLooper);
 
 private:
-    static std::shared_ptr<SubsystemManager> mInstance;
+    SubsystemManager();
+
+    static SubsystemManager* mInstance;
     static std::vector<Subsystem*> mAllSubsystems;
     static std::vector<Loop*> mLoops;
     static std::vector<Reportable*> mLooperReports;

@@ -1,18 +1,17 @@
 #include "SubsystemManager.hpp"
 
-std::shared_ptr<SubsystemManager> SubsystemManager::mInstance;
+SubsystemManager* SubsystemManager::mInstance = nullptr;
 std::vector<Subsystem*> SubsystemManager::mAllSubsystems;
 std::vector<Loop*> SubsystemManager::mLoops;
 std::vector<Reportable*> SubsystemManager::mLooperReports;
 
-std::shared_ptr<SubsystemManager> SubsystemManager::getInstance() {
-    //std::initializer_list<Subsystem> subsystemList
+SubsystemManager* SubsystemManager::getInstance(std::initializer_list<Subsystem*> subsystemList) {
     if(!mInstance) {
-        mInstance = std::make_shared<SubsystemManager>();
+        mInstance = new SubsystemManager();
     }
-    // for(auto elem : subsystemList) {
-    //     mAllSubsystems.push_back(elem);
-    // }
+    for(Subsystem* elem : subsystemList) {
+        mAllSubsystems.push_back(elem);
+    }
 
     return mInstance;
 }

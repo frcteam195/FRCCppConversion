@@ -5,4 +5,5 @@
 class CriticalSystemStatus {
 public:
     virtual bool isSystemFaulted() = 0;
+    virtual ~CriticalSystemStatus() = default;
 };
