@@ -3,26 +3,26 @@
 #include <vector>
 #include <initializer_list>
 
-#include "utils/Subsystem.h"
-#include "utils/Looper/Loop.h"
-#include "utils/Looper/Looper.h"
-#include "utils/TimeoutTimer.h"
+#include "utils/Subsystem.hpp"
+#include "utils/Looper/Loop.hpp"
+#include "utils/Looper/Looper.hpp"
+#include "utils/TimeoutTimer.hpp"
 
 
 
 class SubsystemManager : public ILooper {
 public:
-    static std::shared_ptr<SubsystemManager> GetInstance();
+    static std::shared_ptr<SubsystemManager> getInstance();
 
     SubsystemManager();
 
-    bool CheckSystemsPassDiagnostics();
+    bool checkSystemsPassDiagnostics();
 
-    void Register(Loop& loop) override;
+    void registerLoop(Loop& loop) override;
 
-    void RegisterEnabledLoops(Looper & enabledLooper);
+    void registerEnabledLoops(Looper & enabledLooper);
 
-    void RegisterDisabledLoops(Looper & disabledLooper);
+    void registerDisabledLoops(Looper & disabledLooper);
 
 private:
     static std::shared_ptr<SubsystemManager> mInstance;
@@ -38,36 +38,36 @@ private:
 
         };
 
-        void OnFirstStart(double timestamp) override {
+        void onFirstStart(double timestamp) override {
             for (Loop* loop : mLoops) {
-                loop->OnFirstStart(timestamp);
+                loop->onFirstStart(timestamp);
             }
 		};
 
-        void OnStart(double timestamp) override {
+        void onStart(double timestamp) override {
             for (Loop* loop : mLoops) {
-                loop->OnStart(timestamp);
+                loop->onStart(timestamp);
             }
         };
 
-        void OnLoop(double timestamp) override {
+        void onLoop(double timestamp) override {
             for(Subsystem* subsystem : mAllSubsystems) {
-                subsystem->ReadPeriodicInputs();
+                subsystem->readPeriodicInputs();
             }
 
             for (Loop* loop : mLoops) {
-                loop->OnLoop(timestamp);
+                loop->onLoop(timestamp);
             }
 
             for(Subsystem* subsystem : mAllSubsystems) {
-                subsystem->WritePeriodicOutputs();
+                subsystem->writePeriodicOutputs();
             }
 
-			if (mCriticalCheckTimeout.IsTimedOut()) {
+			if (mCriticalCheckTimeout.isTimedOut()) {
                 for(Subsystem* subsystem : mAllSubsystems) {
-                    subsystem->IsSystemFaulted();
+                    subsystem->isSystemFaulted();
                 }
-				mCriticalCheckTimeout.Reset();
+				mCriticalCheckTimeout.reset();
 			}
 
 			// if (Constants.LOGGING_ENABLED) {
@@ -76,13 +76,13 @@ private:
 			// }
         };
 
-        void OnStop(double timestamp) override {
+        void onStop(double timestamp) override {
             for (Loop* loop : mLoops) {
-                loop->OnStop(timestamp);
+                loop->onStop(timestamp);
             }
         };
 
-        std::string GetName() override {
+        std::string getName() override {
             return "SubsystemManagerEnabledLoop";
         };
     private:
@@ -97,24 +97,24 @@ private:
 
         };
 
-        void OnFirstStart(double timestamp) override {};
+        void onFirstStart(double timestamp) override {};
 
-        void OnStart(double timestamp) override {};
+        void onStart(double timestamp) override {};
 
-        void OnLoop(double timestamp) override {
+        void onLoop(double timestamp) override {
             for(Subsystem* subsystem : mAllSubsystems) {
-                subsystem->ReadPeriodicInputs();
+                subsystem->readPeriodicInputs();
             }
 
             for(Subsystem* subsystem : mAllSubsystems) {
-                subsystem->WritePeriodicOutputs();
+                subsystem->writePeriodicOutputs();
             }
 
-			if (mCriticalCheckTimeout.IsTimedOut()) {
+			if (mCriticalCheckTimeout.isTimedOut()) {
                 for(Subsystem* subsystem : mAllSubsystems) {
-                    subsystem->IsSystemFaulted();
+                    subsystem->isSystemFaulted();
                 }
-				mCriticalCheckTimeout.Reset();
+				mCriticalCheckTimeout.reset();
 			}
 
 			// if (Constants.LOGGING_ENABLED) {
@@ -123,9 +123,9 @@ private:
 			// }
         };
 
-        void OnStop(double timestamp) override {};
+        void onStop(double timestamp) override {};
 
-        std::string GetName() override {
+        std::string getName() override {
             return "SubsystemManagerDisabledLoop";
         };
     private:

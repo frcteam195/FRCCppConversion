@@ -4,5 +4,5 @@
 
 class CriticalSystemStatus {
 public:
-    virtual bool IsSystemFaulted() = 0;
+    virtual bool isSystemFaulted() = 0;
 };

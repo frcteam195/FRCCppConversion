@@ -1,4 +1,4 @@
-#include "Robot.h"
+#include "Robot.hpp"
 #include <frc/livewindow/LiveWindow.h>
 #include <iostream>
 
@@ -7,10 +7,10 @@ void Robot::RobotInit() {
     try {
         frc::LiveWindow::GetInstance()->DisableAllTelemetry();
 
-        mSubsystemManager = SubsystemManager::GetInstance();
+        mSubsystemManager = SubsystemManager::getInstance();
 
-        mSubsystemManager->RegisterEnabledLoops(mEnabledLooper);
-        mSubsystemManager->RegisterDisabledLoops(mDisabledLooper);
+        mSubsystemManager->registerEnabledLoops(mEnabledLooper);
+        mSubsystemManager->registerDisabledLoops(mDisabledLooper);
     } catch (std::exception &ex) {
 
     }

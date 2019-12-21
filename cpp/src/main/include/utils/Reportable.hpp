@@ -5,5 +5,5 @@
 class Reportable {
 public:
     //TODO: Rework with loggable types
-    virtual std::vector<void *> GenerateReport() = 0;
+    virtual std::vector<void *> generateReport() = 0;
 };

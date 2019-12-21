@@ -4,5 +4,5 @@
 
 class DiagnosableSubsystem {
 public:
-    virtual bool RunDiagnostics() = 0;
+    virtual bool runDiagnostics() = 0;
 };

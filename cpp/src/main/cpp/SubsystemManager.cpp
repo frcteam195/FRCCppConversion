@@ -1,11 +1,11 @@
-#include "SubsystemManager.h"
+#include "SubsystemManager.hpp"
 
 std::shared_ptr<SubsystemManager> SubsystemManager::mInstance;
 std::vector<Subsystem*> SubsystemManager::mAllSubsystems;
 std::vector<Loop*> SubsystemManager::mLoops;
 std::vector<Reportable*> SubsystemManager::mLooperReports;
 
-std::shared_ptr<SubsystemManager> SubsystemManager::GetInstance() {
+std::shared_ptr<SubsystemManager> SubsystemManager::getInstance() {
     //std::initializer_list<Subsystem> subsystemList
     if(!mInstance) {
         mInstance = std::make_shared<SubsystemManager>();
@@ -19,27 +19,27 @@ std::shared_ptr<SubsystemManager> SubsystemManager::GetInstance() {
 
 SubsystemManager::SubsystemManager() {}
 
-bool SubsystemManager::CheckSystemsPassDiagnostics() {
+bool SubsystemManager::checkSystemsPassDiagnostics() {
     bool retVal = true;
     for (Subsystem* subsystem : mAllSubsystems) {
-        retVal &= subsystem->RunDiagnostics();
+        retVal &= subsystem->runDiagnostics();
     }
     return retVal;
 }
 
-void SubsystemManager::Register(Loop& loop) {
+void SubsystemManager::registerLoop(Loop& loop) {
     mLoops.push_back(&loop);
 }
 
-void SubsystemManager::RegisterEnabledLoops(Looper& enabledLooper) {
+void SubsystemManager::registerEnabledLoops(Looper& enabledLooper) {
     for(Subsystem* subsystem : mAllSubsystems) {
-        subsystem->RegisterEnabledLoops(*this);
+        subsystem->registerEnabledLoops(*this);
     }
-    enabledLooper.Register(eLoop);
+    enabledLooper.registerLoop(eLoop);
     mLooperReports.push_back(&enabledLooper);
 }
 
-void SubsystemManager::RegisterDisabledLoops(Looper& disabledLooper) {
-    disabledLooper.Register(dLoop);
+void SubsystemManager::registerDisabledLoops(Looper& disabledLooper) {
+    disabledLooper.registerLoop(dLoop);
     mLooperReports.push_back(&disabledLooper);
 }
