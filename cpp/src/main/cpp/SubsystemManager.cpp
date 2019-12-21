@@ -1,14 +1,11 @@
 #include "SubsystemManager.hpp"
 
-SubsystemManager* SubsystemManager::mInstance = nullptr;
+SubsystemManager* SubsystemManager::mInstance = new SubsystemManager();
 std::vector<Subsystem*> SubsystemManager::mAllSubsystems;
 std::vector<Loop*> SubsystemManager::mLoops;
 std::vector<Reportable*> SubsystemManager::mLooperReports;
 
 SubsystemManager* SubsystemManager::getInstance(std::initializer_list<Subsystem*> subsystemList) {
-    if(!mInstance) {
-        mInstance = new SubsystemManager();
-    }
     for(Subsystem* elem : subsystemList) {
         mAllSubsystems.push_back(elem);
     }

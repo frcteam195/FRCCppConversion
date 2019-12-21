@@ -1,14 +1,10 @@
 #include "subsystems/Drive.hpp"
 
-Drive* Drive::mInstance;
+Drive* Drive::mInstance = new Drive();
 
 Drive::Drive() {}
 
 Drive* Drive::getInstance() {
-    if (!mInstance) {
-        mInstance = new Drive();
-    }
-
     return mInstance;
 }
 
