@@ -2,6 +2,7 @@
 
 #include <vector>
 #include <mutex>
+#include <chrono>
 
 #include "frc/Notifier.h"
 #include "frc/Timer.h"
@@ -13,7 +14,7 @@
 
 class Looper : public ILooper, public Reportable {
 public:
-    static constexpr double kPeriod = K_LOOPER_DT;
+    static constexpr units::second_t kPeriod = 0_s;
 
     Looper()
     : notifier_([this]() {
@@ -75,6 +76,7 @@ public:
                 isFirstStart = false;
             }
 
+            
             notifier_.StartPeriodic(kPeriod);
         }
     }

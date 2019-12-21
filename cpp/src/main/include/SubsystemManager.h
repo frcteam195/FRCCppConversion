@@ -22,6 +22,8 @@ public:
         return mInstance;
     };
 
+    SubsystemManager() {};
+
     bool CheckSystemsPassDiagnostics() {
 		bool retVal = true;
         for (Subsystem & subsystem : mAllSubsystems) {
@@ -57,7 +59,7 @@ private:
     static std::vector<Loop> mLoops;
     static std::vector<Reportable> mLooperReports;
 
-    SubsystemManager() {};
+    
 
     class EnabledLoop : public Loop {
     public:

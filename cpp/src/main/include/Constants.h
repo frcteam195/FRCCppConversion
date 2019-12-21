@@ -1,3 +1,3 @@
 #pragma once
 
-#define K_LOOPER_DT 0.01
+#define K_LOOPER_DT 0.01_s
