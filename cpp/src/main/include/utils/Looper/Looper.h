@@ -27,7 +27,7 @@ public:
         if (running_) {
             double now = frc::Timer::GetFPGATimestamp();
             try {
-                for (auto & loop : loops_) {
+                for (Loop & loop : loops_) {
                     loop.OnLoop(now);
                 }
             }
@@ -55,7 +55,7 @@ public:
                 if (isFirstStart) {
                     timestamp_ = frc::Timer::GetFPGATimestamp();
                     try {
-                        for (auto & loop : loops_) {
+                        for (Loop & loop : loops_) {
                             loop.OnFirstStart(timestamp_);
                         }
                     }
@@ -65,7 +65,7 @@ public:
                 }
                 timestamp_ = frc::Timer::GetFPGATimestamp();
                 try {
-                    for (auto & loop : loops_) {
+                    for (Loop & loop : loops_) {
                         loop.OnStart(timestamp_);
                     }
                 }
@@ -88,7 +88,7 @@ public:
             running_ = false;
             timestamp_ = frc::Timer::GetFPGATimestamp();
             try {
-                for (auto & loop : loops_) {
+                for (Loop & loop : loops_) {
                     loop.OnStop(timestamp_);
                 }
             }
