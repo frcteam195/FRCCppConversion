@@ -7,6 +7,7 @@
 
 #include "SubsystemManager.hpp"
 #include "utils/Looper/Looper.hpp"
+#include "reporters/NetworkDataType.hpp"
 
 #include "subsystems/Drive.hpp"
 
