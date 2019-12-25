@@ -1,17 +1,13 @@
 #pragma once
 
-#include <vector>
-
 #include "NetworkDataTypeBase.hpp"
 
 namespace ck {
     namespace log {
         class NetworkDataTypeBase;
 
-        class Reporter {
+        class DataReporter {
         public:
-            std::vector<NetworkDataTypeBase*> reportingSet;
-
             virtual void registerVariable(NetworkDataTypeBase& logVar) = 0;
         };
     }

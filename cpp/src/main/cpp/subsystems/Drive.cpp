@@ -1,11 +1,9 @@
 #include "subsystems/Drive.hpp"
 
-Drive* Drive::mInstance = new Drive();
+DataReporter* Drive::logReporter = &NetworkDataReporter::getInstance();
 
-Drive::Drive() {}
+Drive::Drive() {
 
-Drive* Drive::getInstance() {
-    return mInstance;
 }
 
 void Drive::stop() {
@@ -20,6 +18,10 @@ bool Drive::runDiagnostics() {
     return true;
 }
 
-std::vector<void*> Drive::generateReport() {
-    throw ">:(";
+Drive::PeriodicIO::PeriodicIO()
+:DECLARE_REPORTED(left_position_rotations)
+,DECLARE_REPORTED(right_position_rotations)
+{
+    // left_position_rotations = 3;
+    // right_position_rotations = 4;
 }

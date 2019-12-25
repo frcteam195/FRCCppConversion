@@ -6,13 +6,14 @@
 #include "utils/Subsystem.hpp"
 #include "utils/Looper/Loop.hpp"
 #include "utils/Looper/Looper.hpp"
+#include "utils/Singleton.hpp"
 #include "utils/TimeoutTimer.hpp"
 
-
-
-class SubsystemManager : public ILooper {
+class SubsystemManager : public ILooper, public Singleton<SubsystemManager> {
+    friend Singleton;
 public:
-    static SubsystemManager* getInstance(std::initializer_list<Subsystem*> subsystemList);
+    static SubsystemManager& getInstance(std::initializer_list<Subsystem*> subsystemList);
+    static SubsystemManager& getInstance() = delete;
 
     bool checkSystemsPassDiagnostics();
 
@@ -25,7 +26,6 @@ public:
 private:
     SubsystemManager();
 
-    static SubsystemManager* mInstance;
     static std::vector<Subsystem*> mAllSubsystems;
     static std::vector<Loop*> mLoops;
     static std::vector<Reportable*> mLooperReports;

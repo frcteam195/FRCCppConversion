@@ -1,16 +1,18 @@
 #pragma once
 
 #include <string>
-#include "Reporter.hpp"
+#include "DataReporter.hpp"
 
 namespace ck {
     namespace log {
-        class Reporter;
+        class DataReporter;
 
         class NetworkDataTypeBase {
         public:
             std::string dataName;            
-            NetworkDataTypeBase(Reporter* reporter, std::string name);
+            NetworkDataTypeBase(DataReporter* reporter, std::string name);
+            void setName(std::string name);
+            virtual std::string getReportingValue() = 0;
         };
     }
 }

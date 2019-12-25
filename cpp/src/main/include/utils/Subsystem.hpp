@@ -5,7 +5,7 @@
 #include "DiagnosableSubsystem.hpp"
 #include "Looper/ILooper.hpp"
 
-class Subsystem : public Reportable, public CriticalSystemStatus, public DiagnosableSubsystem {
+class Subsystem : public CriticalSystemStatus, public DiagnosableSubsystem {
 public:
     virtual void readPeriodicInputs() {};
     virtual void writePeriodicOutputs() {};

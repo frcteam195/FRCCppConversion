@@ -2,9 +2,15 @@
 
 namespace ck {
     namespace log {
-        NetworkDataTypeBase::NetworkDataTypeBase(Reporter* reporter, std::string name) {
+        NetworkDataTypeBase::NetworkDataTypeBase(DataReporter* reporter, std::string name) {
             dataName = name;
-            reporter->registerVariable(*this);
+            if (reporter) {
+                reporter->registerVariable(*this);
+            }
+        }
+
+        void NetworkDataTypeBase::setName(std::string name) {
+            dataName = name;
         }
     }
 }

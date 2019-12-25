@@ -4,10 +4,13 @@ void Robot::RobotInit() {
     try {
         frc::LiveWindow::GetInstance()->DisableAllTelemetry();
 
-        mSubsystemManager = SubsystemManager::getInstance({Drive::getInstance()});
+        mSubsystemManager = &SubsystemManager::getInstance({
+            &Drive::getInstance(),
+        });
 
         mSubsystemManager->registerEnabledLoops(mEnabledLooper);
         mSubsystemManager->registerDisabledLoops(mDisabledLooper);
+
     } catch (std::exception &ex) {
 
     }
