@@ -10,7 +10,6 @@ void Robot::RobotInit() {
 
         mSubsystemManager->registerEnabledLoops(mEnabledLooper);
         mSubsystemManager->registerDisabledLoops(mDisabledLooper);
-
     } catch (std::exception &ex) {
 
     }

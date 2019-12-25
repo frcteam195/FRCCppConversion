@@ -10,6 +10,30 @@ void Drive::stop() {
 
 }
 
+void Drive::DriveLoop::onFirstStart(double timestamp) {
+
+}
+
+void Drive::DriveLoop::onStart(double timestamp) {
+
+}
+
+void Drive::DriveLoop::onStop(double timestamp) {
+
+}
+
+void Drive::DriveLoop::onLoop(double timestamp) {
+    
+}
+
+std::string Drive::DriveLoop::getName() {
+    return "DriveLoop";
+}
+
+void Drive::registerEnabledLoops(ILooper & enabledLooper) {
+    enabledLooper.registerLoop(mDriveLoop);
+}
+
 bool Drive::isSystemFaulted() {
     return false;
 }

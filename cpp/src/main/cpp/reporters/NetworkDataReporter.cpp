@@ -13,7 +13,7 @@ namespace ck {
             }
 
             //TODO: Add code for transmitting stuff periodically
-            printf("%s\n", reportingSummary.str().c_str());
+            //printf("%s\n", reportingSummary.str().c_str());
         }) {
             notifier_.StartPeriodic(K_LOG_REPORT_RATE);
         }

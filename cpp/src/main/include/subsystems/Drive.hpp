@@ -18,10 +18,20 @@ public:
 
     bool runDiagnostics() override;
 
+    void registerEnabledLoops(ILooper & enabledLooper) override;
     
 private:
     Drive();
     static DataReporter* logReporter;
+
+    friend class DriveLoop;
+    class DriveLoop : public Loop {
+        void onFirstStart(double timestamp) override;
+        void onStart(double timestamp) override;
+        void onStop(double timestamp) override;
+        void onLoop(double timestamp) override;
+        std::string getName() override;
+    };
 
     friend class PeriodicIO;
     class PeriodicIO {
@@ -33,4 +43,5 @@ private:
     };
 
     PeriodicIO mPeriodicIO;
+    DriveLoop mDriveLoop;
 };
