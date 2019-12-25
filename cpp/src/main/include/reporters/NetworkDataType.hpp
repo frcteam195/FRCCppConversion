@@ -25,7 +25,7 @@ namespace ck {
                 NetworkDataType(reporter, "");
             };
             
-            std::string getReportingValue() override {
+            std::string getReportingValue() const override {
                 if (std::is_same<T, double>::value) {
                     return dataName + ":" + std::to_string(rawValue) + ";";   //TODO: Check performance and possibly implement faster conversion
                 } else {

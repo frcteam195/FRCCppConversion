@@ -9,7 +9,7 @@ namespace ck {
 
             //TODO: Rework with contiguous memory and dump instead of iteration
             for (NetworkDataTypeBase* ndt : reportingSet) {
-                reportingSummary << ndt->getReportingValue();
+                reportingSummary << ndt;
             }
 
             //TODO: Add code for transmitting stuff periodically
