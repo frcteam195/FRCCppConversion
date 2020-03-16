@@ -10,28 +10,28 @@ void Drive::stop() {
 
 }
 
-void Drive::DriveLoop::onFirstStart(double timestamp) {
+void Drive::onFirstStart(double timestamp) {
 
 }
 
-void Drive::DriveLoop::onStart(double timestamp) {
+void Drive::onStart(double timestamp) {
 
 }
 
-void Drive::DriveLoop::onStop(double timestamp) {
+void Drive::onStop(double timestamp) {
     stop();
 }
 
-void Drive::DriveLoop::onLoop(double timestamp) {
+void Drive::onLoop(double timestamp) {
     
 }
 
-std::string Drive::DriveLoop::getName() {
+std::string Drive::getName() {
     return "DriveLoop";
 }
 
 void Drive::registerEnabledLoops(ILooper & enabledLooper) {
-    enabledLooper.registerLoop(mDriveLoop);
+    enabledLooper.registerLoop(*this);
 }
 
 bool Drive::isSystemFaulted() {
@@ -43,8 +43,8 @@ bool Drive::runDiagnostics() {
 }
 
 Drive::PeriodicIO::PeriodicIO()
-:DECLARE_REPORTED(left_position_rotations)
-,DECLARE_REPORTED(right_position_rotations)
+:DECLARE_REPORTED(logReporter,left_position_rotations)
+,DECLARE_REPORTED(logReporter,right_position_rotations)
 {
     // left_position_rotations = 3;
     // right_position_rotations = 4;

@@ -9,7 +9,7 @@
 
 using namespace ck::log;
 
-class Drive : public Subsystem, public Singleton<Drive> {
+class Drive : public Subsystem, public Singleton<Drive>, public Loop {
     friend Singleton;
 public:
     void stop() override;
@@ -19,19 +19,16 @@ public:
     bool runDiagnostics() override;
 
     void registerEnabledLoops(ILooper & enabledLooper) override;
+
+    void onFirstStart(double timestamp) override;
+    void onStart(double timestamp) override;
+    void onStop(double timestamp) override;
+    void onLoop(double timestamp) override;
+    std::string getName() override;
     
 private:
     Drive();
     static DataReporter* logReporter;
-
-    friend class DriveLoop;
-    class DriveLoop : public Loop {
-        void onFirstStart(double timestamp) override;
-        void onStart(double timestamp) override;
-        void onStop(double timestamp) override;
-        void onLoop(double timestamp) override;
-        std::string getName() override;
-    };
 
     friend class PeriodicIO;
     class PeriodicIO {
@@ -43,5 +40,4 @@ private:
     };
 
     PeriodicIO mPeriodicIO;
-    DriveLoop mDriveLoop;
 };

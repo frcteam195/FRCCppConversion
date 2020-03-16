@@ -8,8 +8,7 @@
 #define NetworkLong NetworkDataType<long>
 #define NetworkInteger NetworkDataType<int>
 
-#define DECLARE_REPORTED_2(ident,reporter) ident(reporter, #ident)
-#define DECLARE_REPORTED(ident) DECLARE_REPORTED_2(ident,logReporter)
+#define DECLARE_REPORTED(reporter,ident) ident(reporter, #ident)
 
 namespace ck {
     namespace log {
