@@ -1,7 +1,7 @@
 plugins {
     id "cpp"
     id "google-test-test-suite"
-    id "edu.wpi.first.GradleRIO" version "2020.1.1-beta-4"
+    id "edu.wpi.first.GradleRIO" version "2020.2.2"
 }
 
 // Define my targets (RoboRIO) and artifacts (deployable files)
@@ -13,7 +13,7 @@ deploy {
             // or from command line. If not found an exception will be thrown.
             // You can use getTeamOrDefault(team) instead of getTeamNumber if you
             // want to store a team number in this file.
-            team = 195
+            team = frc.getTeamNumber()
         }
     }
     artifacts {
@@ -40,24 +40,27 @@ deploy {
 // imports this is enabled by default. For new projects, its disabled
 def includeSrcInIncludeRoot = false
 
+// Set this to true to enable desktop support.
+def includeDesktopSupport = false
+
+// Enable simulation gui support. Must check the box in vscode to enable support
+// upon debugging
 dependencies {
-    // In C++ for now, the argument must be true
     simulation wpi.deps.sim.gui(wpi.platforms.desktop, true)
 }
 
 model {
     components {
         frcUserProgram(NativeExecutableSpec) {
-            binaries.all {
-                cppCompiler.args << '-std=c++17' << '-Wall' << '-O3'
-            }
-
             targetPlatform wpi.platforms.roborio
-            targetPlatform wpi.platforms.desktop
+            if (includeDesktopSupport) {
+                targetPlatform wpi.platforms.desktop
+            }
 
             sources.cpp {
                 source {
                     srcDir 'src/main/cpp'
+                    include '**/*.cpp', '**/*.cc'
                 }
                 exportedHeaders {
                     srcDir 'src/main/include'
@@ -88,8 +91,4 @@ model {
             wpi.deps.vendor.cpp(it)
         }
     }
-}
-
-wrapper {
-    gradleVersion = '6.0'
 }
