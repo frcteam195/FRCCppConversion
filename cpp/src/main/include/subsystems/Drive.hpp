@@ -11,6 +11,7 @@ using namespace ck::log;
 
 class Drive : public Subsystem, public Singleton<Drive>, public Loop {
     friend Singleton;
+    friend class PeriodicIO;
 public:
     void stop() override;
 
@@ -30,7 +31,6 @@ private:
     Drive();
     static DataReporter* logReporter;
 
-    friend class PeriodicIO;
     class PeriodicIO {
     public:
         PeriodicIO();
