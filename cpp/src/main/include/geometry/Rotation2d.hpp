@@ -21,21 +21,26 @@ namespace ck
             static const Rotation2d &identity();
             Rotation2d();
             Rotation2d(double x, double y, bool normalize);
-            Rotation2d(Translation2d &direction, bool normalize);
+            Rotation2d(const Translation2d &direction, bool normalize);
+
+            bool operator==(const Rotation2d &obj) const;
+            friend std::ostream &operator<<(std::ostream &os, const Rotation2d &r2d);
 
             static Rotation2d fromRadians(double angle_radians);
             static Rotation2d fromDegrees(double angle_degrees);
 
-            double cos();
-            double sin();
-            double tan();
-            double getRadians();
-            double getDegrees();
-            Rotation2d rotateBy(Rotation2d &other);
-            Rotation2d normal();
-            Rotation2d inverse();
-            bool isParallel(Rotation2d &other);
-            Translation2d toTranslation();
+            double cos() const;
+            double sin() const;
+            double tan() const;
+            double getRadians() const;
+            double getDegrees() const;
+            Rotation2d rotateBy(const Rotation2d &other) const;
+            Rotation2d normal() const;
+            Rotation2d inverse() const;
+            bool isParallel(const Rotation2d &other) const;
+            Translation2d toTranslation() const;
+            Rotation2d interpolate(const Rotation2d &other, double interpFactor) const;
+            double distance(const Rotation2d &other) const;
 
         private:
         };
