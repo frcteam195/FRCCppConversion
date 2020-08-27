@@ -10,16 +10,8 @@ namespace ck
             return kIdentity;
         }
         Translation2d::Translation2d() : x(0), y(0) {}
-        Translation2d::Translation2d(double x, double y)
-        {
-            this->x = x;
-            this->y = y;
-        }
-        Translation2d::Translation2d(const Translation2d &start, const Translation2d &end)
-        {
-            this->x = end.x - start.x;
-            this->y = end.y - start.y;
-        }
+        Translation2d::Translation2d(double x, double y) : x(x), y(y) {}
+        Translation2d::Translation2d(const Translation2d &start, const Translation2d &end) : x(end.x - start.x), y(end.y - start.y) {}
 
         Translation2d Translation2d::operator+(const Translation2d &obj) const
         {
