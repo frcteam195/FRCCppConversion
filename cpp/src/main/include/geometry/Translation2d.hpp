@@ -52,7 +52,7 @@ namespace ck
 
             static Rotation2d getAngle(Translation2d &a, Translation2d &b);
 
-            static double cross(Translation2d &a, Translation2d &b);
+            static double cross(Translation2d a, Translation2d b);
 
             double distance(Translation2d &other);
 

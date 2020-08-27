@@ -119,7 +119,7 @@ namespace ck
             return Rotation2d::fromRadians(std::acos(ck::math::min(1.0, ck::math::max(cos_angle, -1.0))));
         }
 
-        double Translation2d::cross(Translation2d &a, Translation2d &b)
+        double Translation2d::cross(Translation2d a, Translation2d b)
         {
             return a.x * b.y - a.y * b.x;
         }
