@@ -1,8 +1,12 @@
 #pragma once
 
-enum MessageLevel {
-    DEFCON1,
-	ERROR,
-	WARNING,
-	INFO
-};
+namespace ck {
+    namespace log {
+        enum class MessageLevel {
+            DEFCON1,
+            ERROR,
+            WARNING,
+            INFO
+        };
+    }
+}
