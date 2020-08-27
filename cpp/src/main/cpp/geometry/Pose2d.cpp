@@ -70,7 +70,7 @@ namespace ck
                 halftheta_by_tan_of_halfdtheta = -(half_dtheta * transform.getRotation().sin()) / cos_minus_one;
             }
             Translation2d translation_part = transform.getTranslation().rotateBy(Rotation2d(halftheta_by_tan_of_halfdtheta, -half_dtheta, false));
-            return Twist2d(translation_part.getX(), translation_part.getY(), dtheta);
+            return Twist2d(translation_part.x(), translation_part.y(), dtheta);
         }
 
         Translation2d Pose2d::getTranslation() const
@@ -140,7 +140,7 @@ namespace ck
             Translation2d b_t = b.getTranslation();
 
             double tan_b = b_r.tan();
-            double t = ((a_t.getX() - b_t.getX()) * tan_b + b_t.getY() - a_t.getY()) / (a_r.sin() - a_r.cos() * tan_b);
+            double t = ((a_t.x() - b_t.x()) * tan_b + b_t.y() - a_t.y()) / (a_r.sin() - a_r.cos() * tan_b);
             if (std::isnan(t))
             {
                 return Translation2d(ck::math::POS_INF, ck::math::POS_INF);
@@ -169,7 +169,7 @@ namespace ck
 
         Pose2d Pose2d::mirror() const
         {
-            return Pose2d(Translation2d(getTranslation().getX(), -getTranslation().getY()), getRotation().inverse());
+            return Pose2d(Translation2d(getTranslation().x(), -getTranslation().y()), getRotation().inverse());
         }
 
     } // namespace geometry

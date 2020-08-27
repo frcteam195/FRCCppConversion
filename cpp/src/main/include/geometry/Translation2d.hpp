@@ -15,8 +15,8 @@ namespace ck
         class Translation2d
         {
         protected:
-            double x;
-            double y;
+            double x_;
+            double y_;
 
         public:
             static const Translation2d &identity();
@@ -32,8 +32,8 @@ namespace ck
             double norm() const;
             double norm2() const;
 
-            double getX() const;
-            double getY() const;
+            double x() const;
+            double y() const;
 
             Translation2d translateBy(const Translation2d &other) const;
             Translation2d rotateBy(const Rotation2d &rotation) const;

@@ -37,7 +37,7 @@ namespace ck
         }
         Rotation2d::Rotation2d(const Translation2d &direction, bool normalize)
         {
-            Rotation2d(direction.getX(), direction.getY(), normalize);
+            Rotation2d(direction.x(), direction.y(), normalize);
         }
 
         bool Rotation2d::operator==(const Rotation2d &obj) const
