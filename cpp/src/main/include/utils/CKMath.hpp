@@ -31,11 +31,30 @@ namespace ck
         {
             return (a - epsilon <= b) && (a + epsilon >= b);
         }
-        
+
         template <typename T>
         inline bool epsilonEquals(T const &a, T const &b)
         {
             return epsilonEquals(a, b, kEpsilon);
+        }
+
+        template <typename T>
+        inline T limit(T v, T maxMagnitude)
+        {
+            return limit(v, -maxMagnitude, maxMagnitude);
+        }
+
+        template <typename T>
+        inline T limit(T v, T minVal, T maxVal)
+        {
+            return min(maxVal, max(minVal, v));
+        }
+
+        template <typename T>
+        inline T interpolate(T a, T b, T x)
+        {
+            x = limit(x, 0.0, 1.0);
+            return a + (b - a) * x;
         }
 
         inline double deg2rad(double deg)
