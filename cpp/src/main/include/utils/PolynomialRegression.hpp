@@ -41,6 +41,7 @@
 #include <vector>
 #include <stdlib.h>
 #include <cmath>
+#include <stdexcept>
 
 template <class TYPE>
 class PolynomialRegression
@@ -57,7 +58,7 @@ public:
 };
 
 template <class TYPE>
-PolynomialRegression<TYPE>::PolynomialRegression(){};
+PolynomialRegression<TYPE>::PolynomialRegression(){}
 
 template <class TYPE>
 bool PolynomialRegression<TYPE>::fitIt(
@@ -91,7 +92,7 @@ bool PolynomialRegression<TYPE>::fitIt(
     for (int i = 0; i < tnp1; ++i)
     {
         X[i] = 0;
-        for (int j = 0; j < N; ++j)
+        for (size_t j = 0; j < N; ++j)
             X[i] += (TYPE)pow(x[j], i);
     }
 
@@ -110,7 +111,7 @@ bool PolynomialRegression<TYPE>::fitIt(
     for (int i = 0; i < np1; ++i)
     {
         Y[i] = (TYPE)0;
-        for (int j = 0; j < N; ++j)
+        for (size_t j = 0; j < N; ++j)
         {
             Y[i] += (TYPE)pow(x[j], i) * y[j];
         }
