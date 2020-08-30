@@ -4,7 +4,7 @@ namespace ck
 {
     namespace physics
     {
-        CharacterizationConstants DriveCharacterization::characterizeDrive(std::vector<VelocityDataPoint> velocityData, std::vector<AccelerationDataPoint> accelerationData)
+        CharacterizationConstants DriveCharacterization::characterizeDrive(std::vector<VelocityDataPoint> &velocityData, std::vector<AccelerationDataPoint> &accelerationData)
         {
             CharacterizationConstants constants{0, 0, 0};
             std::vector<double> xPoints;

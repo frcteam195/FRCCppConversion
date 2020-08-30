@@ -2,6 +2,8 @@
 
 #include <cmath>
 #include <vector>
+#include <ostream>
+#include <iomanip>
 #include "utils/CKMath.hpp"
 #include "utils/PolynomialRegression.hpp"
 
@@ -14,6 +16,11 @@ namespace ck
             double ks;
             double kv;
             double ka;
+
+            friend std::ostream &operator<<(std::ostream &os, const CharacterizationConstants &constants) {
+                os << std::setprecision(5) << "ks: " << constants.ks  << ", kv: " << constants.kv << ", ka: " << constants.ka;
+                return os;
+            }
         };
         struct VelocityDataPoint
         {
@@ -37,7 +44,7 @@ namespace ck
         class DriveCharacterization
         {
         public:
-            static CharacterizationConstants characterizeDrive(std::vector<VelocityDataPoint> velocityData, std::vector<AccelerationDataPoint> accelerationData);
+            static CharacterizationConstants characterizeDrive(std::vector<VelocityDataPoint> &velocityData, std::vector<AccelerationDataPoint> &accelerationData);
             //TODO: Needs testing of new PolynomailRegression methods
             static void getVelocityCharacterization(std::vector<double> &xPoints, std::vector<double> &yPoints, CharacterizationConstants &constants);
             static void getAccelerationCharacterization(std::vector<double> &xPoints, std::vector<double> &yPoints, CharacterizationConstants &constants);
