@@ -18,7 +18,7 @@ namespace ck
             double ka;
 
             friend std::ostream &operator<<(std::ostream &os, const CharacterizationConstants &constants) {
-                os << std::setprecision(5) << "ks: " << constants.ks  << ", kv: " << constants.kv << ", ka: " << constants.ka;
+                os << std::setprecision(10) << "ks: " << constants.ks  << ", kv: " << constants.kv << ", ka: " << constants.ka;
                 return os;
             }
         };
