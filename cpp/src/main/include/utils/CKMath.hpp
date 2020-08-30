@@ -27,6 +27,11 @@ namespace ck
         }
 
         template <typename T>
+        inline int signum(T val) {
+            return (T(0) < val) - (val < T(0));
+        }
+
+        template <typename T>
         inline bool epsilonEquals(T const &a, T const &b, T epsilon)
         {
             return (a - epsilon <= b) && (a + epsilon >= b);

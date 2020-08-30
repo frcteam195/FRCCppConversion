@@ -41,7 +41,7 @@ namespace ck
             double s, c;
 
             //TODO: check if replacing epsilon here is okay. Originally 1e-9, but using 1e-12
-            if (std::abs(delta.dtheta) < ck::math::kEpsilon)
+            if (std::abs(delta.dtheta) < (1e-9))
             {
                 s = 1.0 - 1.0 / 6.0 * delta.dtheta * delta.dtheta;
                 c = .5 * delta.dtheta;
