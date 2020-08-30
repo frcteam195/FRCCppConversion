@@ -4,19 +4,19 @@ void Robot::RobotInit() {
     try {
         frc::LiveWindow::GetInstance()->DisableAllTelemetry();
 
-        // mSubsystemManager = &SubsystemManager::getInstance({
-        //     &Drive::getInstance(),
-        // });
+        mSubsystemManager = &SubsystemManager::getInstance({
+            &Drive::getInstance(),
+        });
 
-        // mSubsystemManager->registerEnabledLoops(mEnabledLooper);
-        // mSubsystemManager->registerDisabledLoops(mDisabledLooper);
+        mSubsystemManager->registerEnabledLoops(mEnabledLooper);
+        mSubsystemManager->registerDisabledLoops(mDisabledLooper);
     } catch (std::exception &ex) {
 
     }
 }
 
 void Robot::RobotPeriodic() {
-
+    // std::cout << "Running robot code periodic!" << std::endl;
 }
 
 void Robot::AutonomousInit() {

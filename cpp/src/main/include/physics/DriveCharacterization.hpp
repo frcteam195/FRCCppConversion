@@ -45,7 +45,6 @@ namespace ck
         {
         public:
             static CharacterizationConstants characterizeDrive(std::vector<VelocityDataPoint> &velocityData, std::vector<AccelerationDataPoint> &accelerationData);
-            //TODO: Needs testing of new PolynomailRegression methods
             static void getVelocityCharacterization(std::vector<double> &xPoints, std::vector<double> &yPoints, CharacterizationConstants &constants);
             static void getAccelerationCharacterization(std::vector<double> &xPoints, std::vector<double> &yPoints, CharacterizationConstants &constants);
             static void getVelocityData(std::vector<VelocityDataPoint> &input, std::vector<double> &xPoints, std::vector<double> &yPoints);
