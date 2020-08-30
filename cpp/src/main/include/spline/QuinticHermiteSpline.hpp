@@ -130,20 +130,20 @@ namespace ck
                     }
                     double original = sumDCurvature2(splines);
 
-                    QuinticHermiteSpline *temp = &splines[i];
-                    QuinticHermiteSpline *temp1 = &splines[i + 1];
+                    QuinticHermiteSpline temp = splines[i];
+                    QuinticHermiteSpline temp1 = splines[i + 1];
                     ControlPoint cp; //holds the gradient at a control point
 
                     //calculate partial derivatives of sumDCurvature2
-                    splines[i] = QuinticHermiteSpline(temp->x0, temp->x1, temp->dx0, temp->dx1, temp->ddx0, temp->ddx1 + kEpsilon, temp->y0, temp->y1, temp->dy0, temp->dy1, temp->ddy0, temp->ddy1);
-                    splines[i + 1] = QuinticHermiteSpline(temp1->x0, temp1->x1, temp1->dx0, temp1->dx1, temp1->ddx0 + kEpsilon, temp1->ddx1, temp1->y0, temp1->y1, temp1->dy0, temp1->dy1, temp1->ddy0, temp1->ddy1);
+                    splines[i] = QuinticHermiteSpline(temp.x0, temp.x1, temp.dx0, temp.dx1, temp.ddx0, temp.ddx1 + kEpsilon, temp.y0, temp.y1, temp.dy0, temp.dy1, temp.ddy0, temp.ddy1);
+                    splines[i + 1] = QuinticHermiteSpline(temp1.x0, temp1.x1, temp1.dx0, temp1.dx1, temp1.ddx0 + kEpsilon, temp1.ddx1, temp1.y0, temp1.y1, temp1.dy0, temp1.dy1, temp1.ddy0, temp1.ddy1);
                     cp.ddx = (sumDCurvature2(splines) - original) / kEpsilon;
-                    splines[i] = QuinticHermiteSpline(temp->x0, temp->x1, temp->dx0, temp->dx1, temp->ddx0, temp->ddx1, temp->y0, temp->y1, temp->dy0, temp->dy1, temp->ddy0, temp->ddy1 + kEpsilon);
-                    splines[i + 1] = QuinticHermiteSpline(temp1->x0, temp1->x1, temp1->dx0, temp1->dx1, temp1->ddx0, temp1->ddx1, temp1->y0, temp1->y1, temp1->dy0, temp1->dy1, temp1->ddy0 + kEpsilon, temp1->ddy1);
+                    splines[i] = QuinticHermiteSpline(temp.x0, temp.x1, temp.dx0, temp.dx1, temp.ddx0, temp.ddx1, temp.y0, temp.y1, temp.dy0, temp.dy1, temp.ddy0, temp.ddy1 + kEpsilon);
+                    splines[i + 1] = QuinticHermiteSpline(temp1.x0, temp1.x1, temp1.dx0, temp1.dx1, temp1.ddx0, temp1.ddx1, temp1.y0, temp1.y1, temp1.dy0, temp1.dy1, temp1.ddy0 + kEpsilon, temp1.ddy1);
                     cp.ddy = (sumDCurvature2(splines) - original) / kEpsilon;
 
-                    splines[i] = *temp;
-                    splines[i + 1] = *temp1;
+                    splines[i] = temp;
+                    splines[i + 1] = temp1;
                     magnitude += controlPoints[i].ddx * controlPoints[i].ddx + controlPoints[i].ddy * controlPoints[i].ddy;
 
                     controlPoints.push_back(cp);
