@@ -167,6 +167,15 @@ namespace ck
             return Pose2d::log(inverse().transformBy(other)).norm();
         }
 
+        bool Pose2d::equals(const Pose2d &other) {
+            return epsilonEquals(other, ck::math::kEpsilon);
+        }
+
+        Pose2d Pose2d::getPose() const
+        {
+            return *this;
+        }
+
         Pose2d Pose2d::mirror() const
         {
             return Pose2d(Translation2d(getTranslation().x(), -getTranslation().y()), getRotation().inverse());

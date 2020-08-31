@@ -131,5 +131,14 @@ namespace ck
             return inverse().rotateBy(other).getRadians();
         }
 
+        Rotation2d Rotation2d::getRotation() const
+        {
+            return *this;
+        }
+
+        bool Rotation2d::equals(const Rotation2d &other) {
+            return distance(other) < ck::math::kEpsilon;
+        }
+
     } // namespace geometry
 } // namespace ck

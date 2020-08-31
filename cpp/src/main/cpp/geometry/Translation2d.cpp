@@ -119,5 +119,13 @@ namespace ck
             return inverse().translateBy(other).norm();
         }
 
+        Translation2d Translation2d::getTranslation() const {
+            return *this;
+        }
+
+        bool Translation2d::equals(const Translation2d &other) {
+            return *this == other;
+        }
+
     } // namespace geometry
 } // namespace ck

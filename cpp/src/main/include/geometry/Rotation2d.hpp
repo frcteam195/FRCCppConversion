@@ -2,6 +2,7 @@
 
 #include <cmath>
 #include <limits>
+#include "IRotation2d.hpp"
 #include "Translation2d.hpp"
 #include "utils/CKMath.hpp"
 
@@ -11,7 +12,7 @@ namespace ck
     {
         class Translation2d;
 
-        class Rotation2d
+        class Rotation2d : public IRotation2d<Rotation2d>
         {
         protected:
             double cos_angle;
@@ -34,6 +35,7 @@ namespace ck
             double tan() const;
             double getRadians() const;
             double getDegrees() const;
+            Rotation2d getRotation() const override;
             Rotation2d rotateBy(const Rotation2d &other) const;
             Rotation2d normal() const;
             Rotation2d inverse() const;
@@ -41,6 +43,7 @@ namespace ck
             Translation2d toTranslation() const;
             Rotation2d interpolate(const Rotation2d &other, double interpFactor) const;
             double distance(const Rotation2d &other) const;
+            bool equals(const Rotation2d &other) override;
 
         private:
         };

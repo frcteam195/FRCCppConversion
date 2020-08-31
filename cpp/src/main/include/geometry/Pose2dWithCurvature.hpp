@@ -1,12 +1,15 @@
 #pragma once
 
+#include "utils/CKMath.hpp"
 #include "Pose2d.hpp"
+#include "IPose2d.hpp"
+#include "ICurvature.hpp"
 
 namespace ck
 {
     namespace geometry
     {
-        class Pose2dWithCurvature
+        class Pose2dWithCurvature : public IPose2d<Pose2dWithCurvature>, public ICurvature<Pose2dWithCurvature>
         {
         protected:
             Pose2d pose;
@@ -24,15 +27,15 @@ namespace ck
             friend std::ostream &operator<<(std::ostream &os, const Pose2dWithCurvature &t2d);
 
             Pose2d getPose() const;
-            Pose2dWithCurvature transformBy(const Pose2d &transform) const;
-            Pose2dWithCurvature mirror() const;
-            double getCurvature() const;
-            double getDCurvatureDs() const;
-            Translation2d getTranslation() const;
-            Rotation2d getRotation() const;
-            Pose2dWithCurvature interpolate(const Pose2dWithCurvature &other, double interpFactor) const;
-            double distance(const Pose2dWithCurvature &other) const;
-
+            Pose2dWithCurvature transformBy(const Pose2d &transform) const override;
+            Pose2dWithCurvature mirror() const override;
+            double getCurvature() const override;
+            double getDCurvatureDs() const override;
+            Translation2d getTranslation() const override;
+            Rotation2d getRotation() const override;
+            Pose2dWithCurvature interpolate(const Pose2dWithCurvature &other, double interpFactor) const override;
+            double distance(const Pose2dWithCurvature &other) const override;
+            bool equals(const Pose2dWithCurvature &other) override;
         };
     } // namespace geometry
 } // namespace ck

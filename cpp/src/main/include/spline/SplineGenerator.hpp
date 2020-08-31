@@ -2,7 +2,6 @@
 
 #include <cmath>
 #include <vector>
-#include <iostream>
 #include "utils/CKMath.hpp"
 #include "geometry/Geometry.hpp"
 #include "Spline.hpp"

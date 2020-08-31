@@ -4,12 +4,13 @@
 #include "Translation2d.hpp"
 #include "Rotation2d.hpp"
 #include "Twist2d.hpp"
+#include "IPose2d.hpp"
 
 namespace ck
 {
     namespace geometry
     {
-        class Pose2d
+        class Pose2d : public IPose2d<Pose2d>
         {
         protected:
             Translation2d translation;
@@ -39,18 +40,21 @@ namespace ck
              */
             static Twist2d log(const Pose2d &transform);
 
-            Translation2d getTranslation() const;
-            Rotation2d getRotation() const;
-            Pose2d transformBy(const Pose2d &other) const;
+            Translation2d getTranslation() const override;
+            Rotation2d getRotation() const override;
+            Pose2d transformBy(const Pose2d &other) const override;
+
             Pose2d inverse() const;
             Pose2d normal() const;
             Translation2d intersection(const Pose2d &other) const;
             bool isColinear(const Pose2d &other) const;
             bool epsilonEquals(const Pose2d &other, double epsilon) const;
             static Translation2d intersectionInternal(const Pose2d &a, const Pose2d &b);
-            Pose2d interpolate(const Pose2d &other, double x) const;
-            double distance(const Pose2d &other) const;
-            Pose2d mirror() const;
+            Pose2d interpolate(const Pose2d &other, double x) const override;
+            double distance(const Pose2d &other) const override;
+            bool equals(const Pose2d &other) override;
+            Pose2d getPose() const override;
+            Pose2d mirror() const override;
         };
     } // namespace geometry
 } // namespace ck
