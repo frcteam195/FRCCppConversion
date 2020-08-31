@@ -70,9 +70,9 @@ namespace ck
         double QuinticHermiteSpline::sumDCurvature2(std::vector<QuinticHermiteSpline> &splines)
         {
             double sum = 0;
-            for (size_t i = 0; i < splines.size(); i++)
+            for (QuinticHermiteSpline &s : splines)
             {
-                sum += splines[i].sumDCurvature2();
+                sum += s.sumDCurvature2();
             }
             return sum;
         }
