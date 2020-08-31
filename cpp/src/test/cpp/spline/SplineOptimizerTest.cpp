@@ -10,8 +10,6 @@ using namespace std;
 using namespace ck::geometry;
 using namespace ck::spline;
 
-#define CURRENT_MILLIS (std::chrono::duration_cast<std::chrono::milliseconds>(chrono::system_clock::now().time_since_epoch()).count())
-
 TEST(SplineOptimizationTest, PlausibleOutput)
 {
     double kTestEps = 1e-12;
