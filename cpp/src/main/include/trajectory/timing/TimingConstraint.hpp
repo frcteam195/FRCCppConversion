@@ -13,7 +13,7 @@ namespace ck
             template <class S>
             class TimingConstraint
             {
-                static_assert(std::is_base_of<ck::geometry::State, S>::value, "S must inherit from State");
+                static_assert(std::is_base_of<ck::geometry::State<S>, S>::value, "S must inherit from State<S>");
 
             public:
                 virtual double getMaxVelocity(const S &state) const = 0;

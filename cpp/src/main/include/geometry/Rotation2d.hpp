@@ -41,8 +41,8 @@ namespace ck
             Rotation2d inverse() const;
             bool isParallel(const Rotation2d &other) const;
             Translation2d toTranslation() const;
-            Rotation2d interpolate(const Rotation2d &other, double interpFactor) const;
-            double distance(const Rotation2d &other) const;
+            Rotation2d interpolate(const Rotation2d &other, double interpFactor) const override;
+            double distance(const Rotation2d &other) const override;
             bool equals(const Rotation2d &other) override;
 
         private:

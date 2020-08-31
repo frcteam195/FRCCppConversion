@@ -22,11 +22,12 @@ namespace ck
             Pose2dWithCurvature();
             Pose2dWithCurvature(const Pose2d &pose, double curvature, double dcurvature_ds = 0);
             Pose2dWithCurvature(const Translation2d &translation, const Rotation2d &rotation, double curvature, double dcurvature_ds = 0);
+            virtual ~Pose2dWithCurvature() {};
 
             bool operator==(const Pose2dWithCurvature &obj) const;
             friend std::ostream &operator<<(std::ostream &os, const Pose2dWithCurvature &t2d);
 
-            Pose2d getPose() const;
+            Pose2d getPose() const override;
             Pose2dWithCurvature transformBy(const Pose2d &transform) const override;
             Pose2dWithCurvature mirror() const override;
             double getCurvature() const override;

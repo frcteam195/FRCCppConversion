@@ -55,7 +55,7 @@ namespace ck
 
             static double cross(const Translation2d &a, const Translation2d &b);
 
-            double distance(const Translation2d &other) const;
+            double distance(const Translation2d &other) const override;
 
             Translation2d getTranslation() const override;
 
