@@ -1,7 +1,7 @@
 #pragma once
 
+#include <type_traits>
 #include "geometry/Geometry.hpp"
-#include "geometry/State.hpp"
 #include "MinMaxAcceleration.hpp"
 #include "utils/CKMath.hpp"
 

@@ -1,0 +1,22 @@
+#pragma once
+
+#include <type_traits>
+#include "geometry/State.hpp"
+#include "TrajectoryPoint.hpp"
+
+namespace ck
+{
+    namespace trajectory
+    {
+        template <class S>
+        struct TrajectorySamplePoint
+        {
+            static_assert(std::is_base_of<ck::geometry::State<S>, S>::value, "S must inherit from State<S>");
+            S state_;
+            int index_floor_;
+            int index_ceil_;
+
+            TrajectorySamplePoint(const TrajectoryPoint<S> &point) : state_(point.state_), index_floor_(point.index_), index_ceil_(point.index_) {}
+        };
+    } // namespace trajectory
+} // namespace ck

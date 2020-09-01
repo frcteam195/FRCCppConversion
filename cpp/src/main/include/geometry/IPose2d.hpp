@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Pose2d.hpp"
 #include "IRotation2d.hpp"
 #include "ITranslation2d.hpp"
 

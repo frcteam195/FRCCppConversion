@@ -1,6 +1,7 @@
 #pragma once
 
-#include "geometry/Geometry.hpp"
+#include "geometry/Pose2d.hpp"
+#include "geometry/Twist2d.hpp"
 
 namespace ck {
     namespace trajectory {

@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Translation2d.hpp"
 #include "State.hpp"
 
 namespace ck

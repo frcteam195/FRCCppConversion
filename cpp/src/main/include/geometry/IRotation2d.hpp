@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Rotation2d.hpp"
 #include "State.hpp"
 
 namespace ck

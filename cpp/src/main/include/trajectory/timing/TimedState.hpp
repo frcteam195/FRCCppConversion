@@ -1,8 +1,8 @@
 #pragma once
 
-#include "geometry/Geometry.hpp"
 #include "geometry/State.hpp"
 #include "MinMaxAcceleration.hpp"
+#include <type_traits>
 
 namespace ck
 {
