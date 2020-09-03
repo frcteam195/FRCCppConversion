@@ -25,6 +25,7 @@ namespace ck
             Translation2d();
             Translation2d(double x, double y);
             Translation2d(const Translation2d &start, const Translation2d &end);
+            virtual ~Translation2d();
 
             Translation2d operator+(const Translation2d &obj) const;
             bool operator==(const Translation2d &obj) const;

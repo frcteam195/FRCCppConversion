@@ -17,6 +17,7 @@ namespace ck
             int index_ceil_;
 
             TrajectorySamplePoint(const TrajectoryPoint<S> &point) : state_(point.state_), index_floor_(point.index_), index_ceil_(point.index_) {}
+            TrajectorySamplePoint(S state, int index_floor, int index_ceil) : state_(state), index_floor_(index_floor), index_ceil_(index_ceil) {}
         };
     } // namespace trajectory
 } // namespace ck

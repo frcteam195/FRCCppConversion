@@ -12,6 +12,7 @@ namespace ck
         Translation2d::Translation2d() : x_(0), y_(0) {}
         Translation2d::Translation2d(double x, double y) : x_(x), y_(y) {}
         Translation2d::Translation2d(const Translation2d &start, const Translation2d &end) : x_(end.x_ - start.x_), y_(end.y_ - start.y_) {}
+        Translation2d::~Translation2d() {}
 
         Translation2d Translation2d::operator+(const Translation2d &obj) const
         {

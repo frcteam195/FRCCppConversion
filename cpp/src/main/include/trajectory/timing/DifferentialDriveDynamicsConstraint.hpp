@@ -21,15 +21,15 @@ namespace ck
                 static_assert(std::is_base_of<ck::geometry::ICurvature<S>, S>::value, "S must inherit from ICurvature<S>");
 
             protected:
-                ck::physics::DifferentialDrive drive_;
+                ck::physics::DifferentialDrive *drive_;
                 double abs_voltage_limit_;
 
             public:
-                DifferentialDriveDynamicsConstraint(DifferentialDrive &drive, double abs_voltage_limit) : drive_(drive), abs_voltage_limit_(abs_voltage_limit) {}
+                DifferentialDriveDynamicsConstraint(DifferentialDrive &drive, double abs_voltage_limit) : drive_(&drive), abs_voltage_limit_(abs_voltage_limit) {}
 
                 double getMaxVelocity(const S &state) const override
                 {
-                    return ck::math::meters_to_inches(drive_.getMaxAbsVelocity(
+                    return ck::math::meters_to_inches(drive_->getMaxAbsVelocity(
                         ck::math::meters_to_inches(state.getCurvature()), // Curvature is in inverse inches, so meters_to_inches is correct.
                         /*Units.meters_to_inches(Units.meters_to_inches(state.getDCurvatureDs())),  // DCurvature is in inverse inches^2.*/
                         abs_voltage_limit_));
@@ -39,8 +39,8 @@ namespace ck
                 {
                     // TODO figure out a units convention for generic states.  Traditionally we use inches...
                     // NOTE: units cancel on angular velocity.
-                    DifferentialDrive.MinMax min_max =
-                        drive_.getMinMaxAcceleration(ck::physics::ChassisState{ck::math::inches_to_meters(velocity), state.getCurvature() * velocity},
+                    ck::physics::MinMax min_max =
+                        drive_->getMinMaxAcceleration(ck::physics::ChassisState{ck::math::inches_to_meters(velocity), state.getCurvature() * velocity},
                                                      ck::math::meters_to_inches(state.getCurvature()), // Curvature is in inverse inches, so meters_to_inches is correct.
                                                      /*Units.meters_to_inches(Units.meters_to_inches(state.getDCurvatureDs())),  // DCurvature is in inverse inches^2.*/
                                                      abs_voltage_limit_);

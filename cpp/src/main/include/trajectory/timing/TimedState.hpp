@@ -1,7 +1,7 @@
 #pragma once
 
 #include "geometry/State.hpp"
-#include "MinMaxAcceleration.hpp"
+#include "utils/CKMath.hpp"
 #include <type_traits>
 
 namespace ck
@@ -22,8 +22,9 @@ namespace ck
                 double acceleration_;
 
             public:
-                TimedState(const S &state) : state_(state) {}
-                TimedState(const S &state, double t, double velocity, double acceleration) : state_(state), t_(t), velocity_(velocity), acceleration_(acceleration) {}
+                TimedState(S state) : state_(state) {}
+                TimedState(S state, double t, double velocity, double acceleration) : state_(state), t_(t), velocity_(velocity), acceleration_(acceleration) {}
+                virtual ~TimedState() {}
                 bool operator==(const TimedState<S> &obj) const { return state().equals(obj.state()) && ck::math::epsilonEquals(t(), obj.t()); }
                 S state() const { return state_; }
                 void set_t(double t) { t_ = t; }

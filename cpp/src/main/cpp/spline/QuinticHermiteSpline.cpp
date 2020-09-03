@@ -109,7 +109,8 @@ namespace ck
                 return;
             }
 
-            std::vector<ControlPoint> controlPoints(splines.size() - 1);
+            std::vector<ControlPoint> controlPoints;
+            controlPoints.reserve(splines.size() - 1);
             double magnitude = 0;
 
             for (size_t i = 0; i < splines.size() - 1; ++i)
