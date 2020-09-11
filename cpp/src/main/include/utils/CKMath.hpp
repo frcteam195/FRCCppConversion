@@ -2,6 +2,7 @@
 
 #include "CKMathConstants.hpp"
 #include "Units.hpp"
+#include <map>
 
 namespace ck
 {
@@ -20,7 +21,8 @@ namespace ck
         }
 
         template <typename T>
-        inline int signum(T val) {
+        inline int signum(T val)
+        {
             return (T(0) < val) - (val < T(0));
         }
 
@@ -53,6 +55,27 @@ namespace ck
         {
             x = limit(x, 0.0, 1.0);
             return a + (b - a) * x;
+        }
+
+        template <typename K, typename V>
+        inline double interpolate(const std::map<K, V> &data, K x)
+        {
+            typedef typename std::map<K, V>::const_iterator i_t;
+
+            i_t i = data.upper_bound(x);
+            if (i == data.end())
+            {
+                return (--i)->second;
+            }
+            if (i == data.begin())
+            {
+                return i->second;
+            }
+            i_t l = i;
+            --l;
+
+            const K delta = (x - l->first) / (i->first - l->first);
+            return delta * i->second + (1 - delta) * l->second;
         }
     } // namespace math
 } // namespace ck
