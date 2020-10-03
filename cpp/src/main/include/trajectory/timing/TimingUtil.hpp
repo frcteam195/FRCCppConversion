@@ -162,9 +162,6 @@ namespace ck
                         // ConsoleReporter.report("i: " + i + ", " + constraint_state.toString());
                         predecessor = constraint_state;
                         constraint_states.push_back(constraint_state);
-                        std::cout << "MaxVel:" << constraint_state.max_velocity << std::endl;
-                        std::cout << "MaxAccel:" << constraint_state.max_acceleration << std::endl;
-                        std::cout << "MinAccel:" << constraint_state.min_acceleration << std::endl;
                     }
 
                     // Backward pass.
@@ -248,10 +245,6 @@ namespace ck
                         double dt = 0.0;
                         if (i > 0)
                         {
-                            // std::cout << "MaxVel: " << constrained_state.max_velocity << std::endl;
-                            // std::cout << "Vel: " << v << std::endl;
-                            // std::cout << "Accel: " << accel << std::endl;
-
                             timed_states[i - 1].set_acceleration(reverse ? -accel : accel);
                             if (std::fabs(accel) > kEpsilon)
                             {

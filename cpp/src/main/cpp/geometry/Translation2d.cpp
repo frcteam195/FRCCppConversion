@@ -77,7 +77,7 @@ namespace ck
             {
                 return Translation2d(other);
             }
-            return Translation2d(extrapolate(other, x_));
+            return Translation2d(extrapolate(other, interpFactor));
         }
 
         Translation2d Translation2d::extrapolate(const Translation2d &other, double interpFactor) const

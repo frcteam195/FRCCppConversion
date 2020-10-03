@@ -76,12 +76,12 @@ TEST(TimingUtilTest, NoConstraints)
     vector<TimingConstraint<Translation2d>> tmpVector;
     // // Triangle profile.
     Trajectory<TimedState<Translation2d>> timed_traj = buildAndCheckTrajectory(dist_view, 1.0, tmpVector, 0.0, 0.0, 20.0, 5.0);
-    // tmpVector.clear();
+    tmpVector.clear();
 
     // // Trapezoidal profile.
-    // timed_traj = buildAndCheckTrajectory(dist_view, 1.0, tmpVector, 0.0, 0.0, 10.0, 5.0);
-    // tmpVector.clear();
+    timed_traj = buildAndCheckTrajectory(dist_view, 1.0, tmpVector, 0.0, 0.0, 10.0, 5.0);
+    tmpVector.clear();
 
     // // Trapezoidal profile with start and end velocities.
-    // timed_traj = buildAndCheckTrajectory(dist_view, 1.0, tmpVector, 5.0, 2.0, 10.0, 5.0);
+    timed_traj = buildAndCheckTrajectory(dist_view, 1.0, tmpVector, 5.0, 2.0, 10.0, 5.0);
 }
