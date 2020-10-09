@@ -12,7 +12,7 @@ namespace ck
         namespace timing
         {
             template <class S>
-            class VelocityLimitRegionConstraint : public ck::geometry::TimingConstraint<S>
+            class VelocityLimitRegionConstraint : public TimingConstraint<S>
             {
                 static_assert(std::is_base_of<ck::geometry::ITranslation2d<S>, S>::value, "S must inherit from ITranslation2d<S>");
 
@@ -22,8 +22,8 @@ namespace ck
                 double velocity_limit_;
 
             public:
-                VelocityLimitRegionConstraint(Translation2d min_corner, Translation2d max_corner, double velocity_limit) : min_corner_(min_corner), max_corner_(max_corner), velocity_limit_(velocity_limit) {}
-                double getMaxVelocity(const S &state) override
+                VelocityLimitRegionConstraint(ck::geometry::Translation2d min_corner, ck::geometry::Translation2d max_corner, double velocity_limit) : min_corner_(min_corner), max_corner_(max_corner), velocity_limit_(velocity_limit) {}
+                double getMaxVelocity(const S &state) const override
                 {
                     ck::geometry::Translation2d translation = state.getTranslation();
                     if (translation.x() <= max_corner_.x() && translation.x() >= min_corner_.x() &&
@@ -33,7 +33,7 @@ namespace ck
                     }
                     return ck::math::POS_INF;
                 }
-                MinMaxAcceleration getMinMaxAcceleration(const S &state, double velocity) const
+                MinMaxAcceleration getMinMaxAcceleration(const S &state, double velocity) const override
                 {
                     return MinMaxAcceleration::kNoLimits;
                 }

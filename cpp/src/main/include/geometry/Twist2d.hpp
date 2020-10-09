@@ -12,9 +12,9 @@ namespace ck
         class Twist2d
         {
         public:
-            const double dx;
-            const double dy;
-            const double dtheta; // Radians!
+            double dx;
+            double dy;
+            double dtheta; // Radians!
 
             static const Twist2d &identity();
             Twist2d();
