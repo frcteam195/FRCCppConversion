@@ -7,7 +7,6 @@
 #include "geometry/Geometry.hpp"
 #include "trajectory/timing/TimedState.hpp"
 #include "trajectory/timing/TimingUtil.hpp"
-#include "trajectory/timing/VelocityLimitRegionConstraint.hpp"
 
 using namespace std;
 using namespace ck::geometry;
@@ -76,80 +75,44 @@ TEST(TimingUtilTest, NoConstraints)
 
     vector<TimingConstraint<Translation2d>> tmpVector;
 
-    // // Triangle profile.
+    // Triangle profile.
     Trajectory<TimedState<Translation2d>> timed_traj = buildAndCheckTrajectory(dist_view, 1.0, tmpVector, 0.0, 0.0, 20.0, 5.0);
     tmpVector.clear();
 
-    // // Trapezoidal profile.
+    // Trapezoidal profile.
     timed_traj = buildAndCheckTrajectory(dist_view, 1.0, tmpVector, 0.0, 0.0, 10.0, 5.0);
     tmpVector.clear();
 
-    // // Trapezoidal profile with start and end velocities.
+    // Trapezoidal profile with start and end velocities.
     timed_traj = buildAndCheckTrajectory(dist_view, 1.0, tmpVector, 5.0, 2.0, 10.0, 5.0);
 }
-
-template <class S>
-class ConditionalVelocityTimingConstraint : public TimingConstraint<S> 
-{
-    static_assert(std::is_base_of<ck::geometry::State<S>, S>::value, "S must inherit from State<S>");
-
-    public:
-        double getMaxVelocity(const S &state) const override
-        {
-            if (state.getTranslation().x() >= 24.0) 
-            {
-                return 5.0;
-            } else 
-            {
-                return ck::math::POS_INF;
-            }
-        }
-
-        MinMaxAcceleration getMinMaxAcceleration(const S &state, double velocity) const override
-        {
-            return MinMaxAcceleration(ck::math::NEG_INF, ck::math::POS_INF);
-        }
-};
 
 TEST(TimingUtilTest, ConditionalVelocityConstraint)
 {
     Trajectory<Translation2d> traj(kTimingUtilTestWaypoints);
     DistanceView<Translation2d> dist_view(traj);
 
-    vector<ConditionalVelocityTimingConstraint<Translation2d>> tmpVector;
+    vector<TimingConstraint<Translation2d>> tmpVector;
+    tmpVector.reserve(1);
+    TimingConstraint<Translation2d> constraint(ConstraintType::CONDITIONAL_VELOCITY);
+    tmpVector.push_back(constraint);        
 
     // Trapezoidal profile.
-    //Trajectory<TimedState<Translation2d>> timed_traj = buildAndCheckTrajectory(dist_view, 1.0,
-    //        tmpVector, 0.0, 0.0, 10.0, 5.0);
+    Trajectory<TimedState<Translation2d>> timed_traj = buildAndCheckTrajectory(dist_view, 1.0, tmpVector, 0.0, 0.0, 10.0, 5.0);
 }
-
-template <class S>
-class ConditionalAccelTimingConstraint : TimingConstraint<S> 
-{
-    static_assert(std::is_base_of<ck::geometry::State<S>, S>::value, "S must inherit from State<S>");
-
-    public:
-        double getMaxVelocity(const S &state) const override
-        {
-            return ck::math::POS_INF;
-        }
-
-        MinMaxAcceleration getMinMaxAcceleration(const S &state, double velocity) const override
-        {
-            return MinMaxAcceleration(-10.0, 10.0 / velocity);
-        }
-};
 
 TEST(TimingUtilTest, ConditionalAccelerationConstraint)
 {
     Trajectory<Translation2d> traj(kTimingUtilTestWaypoints);
     DistanceView<Translation2d> dist_view(traj);      
 
-    vector<ConditionalAccelTimingConstraint<Translation2d>> tmpVector;
+    vector<TimingConstraint<Translation2d>> tmpVector;
+    tmpVector.reserve(1);
+    TimingConstraint<Translation2d> constraint(ConstraintType::CONDITIONAL_ACCEL);
+    tmpVector.push_back(constraint);    
 
     // Trapezoidal profile.
-    //Trajectory<TimedState<Translation2d>> timed_traj = buildAndCheckTrajectory(dist_view, 1.0,
-    //        tmpVector, 0.0, 0.0, 10.0, 5.0);
+    Trajectory<TimedState<Translation2d>> timed_traj = buildAndCheckTrajectory(dist_view, 1.0, tmpVector, 0.0, 0.0, 10.0, 5.0);
 }
 
 TEST(TimingUtilTest, VelocityLimitRegionConstraint)
@@ -160,12 +123,11 @@ TEST(TimingUtilTest, VelocityLimitRegionConstraint)
     Translation2d min_corner(6.0, -6.0);
     Translation2d max_corner(18.0, 6.0);        
 
-    vector<VelocityLimitRegionConstraint<Translation2d>> tmpVector;
-    //tmpVector.reserve(2);
-    //VelocityLimitRegionConstraint<Translation2d> constraint(min_corner, max_corner, 3.0);
-    //tmpVector.insert()
+    vector<TimingConstraint<Translation2d>> tmpVector;
+    tmpVector.reserve(1);
+    TimingConstraint<Translation2d> constraint(ConstraintType::VELOCITY_LIMIT_REGION, min_corner, max_corner, 3.0);
+    tmpVector.push_back(constraint);
 
     // Trapezoidal profile.
-    //Trajectory<TimedState<Translation2d>> timed_traj = buildAndCheckTrajectory(dist_view, 1.0,
-    //        tmpVector, 0.0, 0.0, 10.0, 5.0);
+    Trajectory<TimedState<Translation2d>> timed_traj = buildAndCheckTrajectory(dist_view, 1.0, tmpVector, 0.0, 0.0, 10.0, 5.0);
 }

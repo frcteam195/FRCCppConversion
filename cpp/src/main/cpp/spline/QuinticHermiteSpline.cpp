@@ -110,7 +110,12 @@ namespace ck
             }
 
             std::vector<ControlPoint> controlPoints;
+
+#ifdef _MSC_VER
+            controlPoints.resize(splines.size() - 1);
+#else
             controlPoints.reserve(splines.size() - 1);
+#endif
             double magnitude = 0;
 
             for (size_t i = 0; i < splines.size() - 1; ++i)
