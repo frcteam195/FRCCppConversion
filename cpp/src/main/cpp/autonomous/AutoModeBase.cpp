@@ -11,7 +11,7 @@ void AutoModeBase::run() {
     try {
         routine();
     } catch (AutoModeEndedException e) {
-        frc::DriverStation::ReportError("AUTO MODE DONE!!!! ENDED EARLY!!!!");
+        frc::DriverStation::ReportError(e.what());
         return;
     }
 
@@ -32,7 +32,7 @@ bool AutoModeBase::isActive() {
 
 bool AutoModeBase::isActiveWithThrow() {
     if (!isActive()) {
-        //throw AutoModeEndedException("Action ended early");
+        throw AutoModeEndedException();
     }
 
     return isActive();

@@ -1,4 +1,5 @@
 #include "spline/QuinticHermiteSpline.hpp"
+#include "utils/CKPow.hpp"
 
 namespace ck
 {
@@ -40,8 +41,8 @@ namespace ck
 
         ck::geometry::Translation2d QuinticHermiteSpline::getPoint(double t)
         {
-            double x = ax * t * t * t * t * t + bx * t * t * t * t + cx * t * t * t + dx_ * t * t + ex * t + fx;
-            double y = ay * t * t * t * t * t + by * t * t * t * t + cy * t * t * t + dy_ * t * t + ey * t + fy;
+            double x = ax * CKPOW(t,5) + bx * CKPOW(t,4) + cx * CKPOW(t,3) + dx_ * CKPOW(t,2) + ex * t + fx;
+            double y = ay * CKPOW(t,5) + by * CKPOW(t,4) + cy * CKPOW(t,3) + dy_ * CKPOW(t,2) + ey * t + fy;
             return ck::geometry::Translation2d(x, y);
         }
 
@@ -244,32 +245,32 @@ namespace ck
 
         double QuinticHermiteSpline::dx(double t)
         {
-            return 5.0 * ax * t * t * t * t + 4.0 * bx * t * t * t + 3.0 * cx * t * t + 2.0 * dx_ * t + ex;
+            return 5.0 * ax * CKPOW(t,4) + 4.0 * bx * CKPOW(t,3) + 3.0 * cx * CKPOW(t,2) + 2.0 * dx_ * t + ex;
         }
 
         double QuinticHermiteSpline::dy(double t)
         {
-            return 5.0 * ay * t * t * t * t + 4.0 * by * t * t * t + 3.0 * cy * t * t + 2.0 * dy_ * t + ey;
+            return 5.0 * ay * CKPOW(t,4) + 4.0 * by * CKPOW(t,3) + 3.0 * cy * CKPOW(t,2) + 2.0 * dy_ * t + ey;
         }
 
         double QuinticHermiteSpline::ddx(double t)
         {
-            return 20.0 * ax * t * t * t + 12.0 * bx * t * t + 6.0 * cx * t + 2.0 * dx_;
+            return 20.0 * ax * CKPOW(t,3) + 12.0 * bx * CKPOW(t,2) + 6.0 * cx * t + 2.0 * dx_;
         }
 
         double QuinticHermiteSpline::ddy(double t)
         {
-            return 20.0 * ay * t * t * t + 12.0 * by * t * t + 6.0 * cy * t + 2.0 * dy_;
+            return 20.0 * ay * CKPOW(t,3) + 12.0 * by * CKPOW(t,2) + 6.0 * cy * t + 2.0 * dy_;
         }
 
         double QuinticHermiteSpline::dddx(double t)
         {
-            return 60.0 * ax * t * t + 24.0 * bx * t + 6.0 * cx;
+            return 60.0 * ax * CKPOW(t,2) + 24.0 * bx * t + 6.0 * cx;
         }
 
         double QuinticHermiteSpline::dddy(double t)
         {
-            return 60.0 * ay * t * t + 24.0 * by * t + 6.0 * cy;
+            return 60.0 * ay * CKPOW(t,2) + 24.0 * by * t + 6.0 * cy;
         }
 
         double QuinticHermiteSpline::dCurvature2(double t)

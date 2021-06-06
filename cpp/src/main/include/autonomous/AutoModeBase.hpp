@@ -8,7 +8,7 @@ class AutoModeBase
 private:
     ThreadRateControl threadRateControl;
 protected:
-    constexpr static double mUpdateRate = 1.0 / 50.0;
+    static constexpr double mUpdateRate = 0.010;
     bool mActive;
 public:
     virtual void routine() = 0;
