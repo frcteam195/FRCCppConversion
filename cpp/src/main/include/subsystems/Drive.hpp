@@ -46,6 +46,7 @@ public:
     bool isDoneWithTrajectory();
     void setDriveControlState(DriveControlState driveControlState);
     void setTrajectory(TrajectoryIterator<TimedState<Pose2dWithCurvature>> trajectory);
+    void setHeading(Rotation2d heading);
 
 private:
     Drive();

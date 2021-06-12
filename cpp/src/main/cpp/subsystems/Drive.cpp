@@ -67,6 +67,11 @@ void Drive::setTrajectory(TrajectoryIterator<TimedState<Pose2dWithCurvature>> tr
     // }
 }
 
+void Drive::setHeading(Rotation2d heading) {
+    //TODO: Implement after motion planners    
+    //mGyroOffset = heading.rotateBy(Rotation2d.fromDegrees(mGyro.getFusedHeading()).inverse());
+    //mPeriodicIO.gyro_heading = heading;
+}
 
 Drive::PeriodicIO::PeriodicIO()
 :DECLARE_REPORTED(logReporter,left_position_rotations)

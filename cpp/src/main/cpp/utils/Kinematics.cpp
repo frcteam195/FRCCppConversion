@@ -19,7 +19,7 @@ namespace ck
             return geometry::Twist2d(dx, dy, delta_rotation_rads);
         }
         
-        geometry::Twist2d Kinematics::forwardKinematics(double left_wheel_delta, double right_wheel_delta, geometry::Rotation2d previous_heading, geometry::Rotation2d current_heading)
+        geometry::Twist2d Kinematics::forwardKinematics(geometry::Rotation2d previous_heading, double left_wheel_delta, double right_wheel_delta, geometry::Rotation2d current_heading)
         {
             const double dx = (left_wheel_delta + right_wheel_delta) / 2.0;
             const double dy = 0.0;

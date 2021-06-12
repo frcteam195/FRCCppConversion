@@ -58,7 +58,7 @@ namespace ck
         }
 
         template <typename K, typename V>
-        inline double interpolate(const std::map<K, V> &data, K x)
+        inline V interpolate(const std::map<K, V> &data, K x)
         {
             typedef typename std::map<K, V>::const_iterator i_t;
 
@@ -77,5 +77,27 @@ namespace ck
             const K delta = (x - l->first) / (i->first - l->first);
             return delta * i->second + (1 - delta) * l->second;
         }
+
+        template <typename K, typename V>
+        inline V interpolateGeometry2d(const std::map<K, V> &data, K x)
+        {
+            typedef typename std::map<K, V>::const_iterator i_t;
+
+            i_t i = data.upper_bound(x);
+            if (i == data.end())
+            {
+                return (--i)->second;
+            }
+            if (i == data.begin())
+            {
+                return i->second;
+            }
+            i_t l = i;
+            --l;
+
+            const K delta = (x - l->first) / (i->first - l->first);
+            return i->second.interpolate(l->second, delta);
+        }
+
     } // namespace math
 } // namespace ck
