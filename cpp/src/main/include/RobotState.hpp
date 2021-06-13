@@ -23,9 +23,9 @@ public:
      * to fill in the gaps.
      */
     ck::geometry::Pose2d getFieldToVehicle(double timestamp);
-    std::map<double, ck::geometry::Pose2d> getLatestFieldToVehicle();
     ck::geometry::Pose2d getPredictedFieldToVehicle(double lookahead_time);
     ck::geometry::Pose2d getFieldToLidar(double timestamp);
+    ck::geometry::Pose2d getLatestFieldToVehicle();
     void addFieldToVehicleObservation(double timestamp, ck::geometry::Pose2d observation);
     void addObservations(double timestamp, ck::geometry::Twist2d measured_velocity,
                                                 ck::geometry::Twist2d predicted_velocity);

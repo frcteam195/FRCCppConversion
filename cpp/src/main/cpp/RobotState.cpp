@@ -23,6 +23,11 @@ ck::geometry::Pose2d RobotState::getFieldToVehicle(double timestamp) {
     return ck::math::interpolateGeometry2d<double, ck::geometry::Pose2d> (field_to_vehicle_, timestamp);
 }
 
+ck::geometry::Pose2d RobotState::getLatestFieldToVehicle() {
+    RobotState::Iter it = field_to_vehicle_.end();
+    return it->second;
+}
+
 ck::geometry::Pose2d RobotState::getPredictedFieldToVehicle(double lookahead_time) {
 
     RobotState::Iter it = field_to_vehicle_.end();

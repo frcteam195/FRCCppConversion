@@ -44,8 +44,17 @@ public:
     std::string getName() override;
 
     bool isDoneWithTrajectory();
+    
+	double getLeftEncoderDistance();
+	double getRightEncoderDistance();
+	double getRightLinearVelocity();
+	double getLeftLinearVelocity();
+	double getLinearVelocity();
+
     void setDriveControlState(DriveControlState driveControlState);
     void setTrajectory(TrajectoryIterator<TimedState<Pose2dWithCurvature>> trajectory);
+
+    Rotation2d getHeading();
     void setHeading(Rotation2d heading);
 
 private:
