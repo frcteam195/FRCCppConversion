@@ -9,12 +9,18 @@ namespace ck
     namespace trajectory
     {
         template <class S>
-        struct TrajectorySamplePoint
+        class TrajectorySamplePoint
         {
+        public:
             static_assert(std::is_base_of<ck::geometry::State<S>, S>::value, "S must inherit from State<S>");
             S state_;
             int index_floor_;
             int index_ceil_;
+
+
+            int index_floor(){ return index_floor_; }
+            int index_ceil(){ return index_ceil_; }
+            S state(){ return state_; }
 
             TrajectorySamplePoint(const TrajectoryPoint<S> &point)
                 : state_(point.state_),

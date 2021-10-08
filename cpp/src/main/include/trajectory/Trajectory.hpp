@@ -22,23 +22,26 @@ namespace ck
 
         public:
             Trajectory()
-                : points_(),
-                  index_view_(*this)
+                : points_()
             {
+                index_view_.initialize(this);
             }
 
             Trajectory(std::vector<S> &states)
-                : points_(),
-                  index_view_(*this)
+                : points_()
             {
-                points_.reserve(states.size());
+                index_view_.initialize(this);
                 for (int i = 0; i < (int)states.size(); ++i)
                 {
                     points_.push_back(TrajectoryPoint<S>{states[i], i});
                 }
             }
 
-            bool isEmpty() {return points_.empty(); }
+            Trajectory& operator=( Trajectory in ){
+                points_ = in.points_;
+            }
+
+            bool isEmpty() {return points_.empty();}
             int length() { return points_.size(); }
             TrajectoryPoint<S> getPoint(int index) { return points_[index]; }
             S getState(int index) { return points_[index].state_; }

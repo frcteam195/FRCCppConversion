@@ -6,6 +6,8 @@
 #include "TrajectorySamplePoint.hpp"
 #include "utils/CKMath.hpp"
 
+#include <iostream>
+
 namespace ck
 {
     namespace trajectory
@@ -17,9 +19,19 @@ namespace ck
 
         protected:
             Trajectory<S> *trajectory_;
-
+            bool is_initialized;
         public:
-            IndexView(Trajectory<S> &traj) : trajectory_(&traj) {}
+            IndexView()
+            {
+                is_initialized = false;
+            }
+
+            void initialize(Trajectory<S>* traj)
+            {
+                trajectory_ = traj;
+                is_initialized = true;
+            }
+
             TrajectorySamplePoint<S> sample(double index) override { return trajectory_->getInterpolated(index); }
             double last_interpolant() const override { return ck::math::max(0, trajectory_->length() - 1); }
             double first_interpolant() const override { return 0.0; }
