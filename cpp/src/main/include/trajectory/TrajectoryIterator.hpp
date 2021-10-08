@@ -46,19 +46,19 @@ namespace ck
 
             TrajectorySamplePoint<S> getSample()
                 {
-                    return current_sample_;
+                    return *current_sample_;
                 }
 
             S getState()
                 {
-                    return current_sample_.state();
+                    return (current_sample_->state());
                 }
 
             TrajectorySamplePoint<S> advance(double additional_progress)
                 {
                     progress_ = ck::math::max(view_->first_interpolant(), ck::math::min(view_->last_interpolant(), progress_ + additional_progress));
-                    current_sample_ = view_->sample(progress_);
-                    return current_sample_;
+                    *current_sample_ = view_->sample(progress_);
+                    return *current_sample_;
                 }
 
             TrajectorySamplePoint<S> preview(double additional_progress)

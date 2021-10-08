@@ -78,7 +78,7 @@ namespace ck
                     return TrajectorySamplePoint<S> { getState(i).interpolate(getState(i + 1), frac), i, i + 1 };
                 }
             }
-            IndexView<S> getIndexView() { return index_view_; }
+            IndexView<S>& getIndexView() { return index_view_; }
         };
     } // namespace trajectory
 } // namespace ck

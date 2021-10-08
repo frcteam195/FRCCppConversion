@@ -9,10 +9,9 @@
 //#include "trajectory/timing/TimingUtil.hpp"
 #include "trajectory/Trajectory.hpp"
 
-double kTestEpsilon = 1e-9;
+static double kTestEpsilon = 1e-9;
 
-
-std::vector<ck::geometry::Translation2d> kWaypoints =
+static std::vector<ck::geometry::Translation2d> kWaypoints =
 { ck::geometry::Translation2d(0.0, 0.0),
   ck::geometry::Translation2d(24.0, 0.0),
   ck::geometry::Translation2d(36.0, 12.0),
@@ -77,5 +76,3 @@ TEST(TrajTest, StateAccessor){
     ASSERT_EQ( kWaypoints[2].interpolate(kWaypoints[3], .75), index_view.sample(2.75).state() );
 
 }
-
-
