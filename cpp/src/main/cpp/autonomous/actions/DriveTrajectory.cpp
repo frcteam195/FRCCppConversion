@@ -6,7 +6,7 @@ DriveTrajectory::DriveTrajectory( Trajectory<TimedState<Pose2dWithCurvature>> tr
                                   bool resetPose )
 {
     mResetPose = resetPose;
-    view = new TimedView <Pose2dWithCurvature> (trajectory);
+    view = new TimedView <Pose2dWithCurvature>  (trajectory);
     mTrajectory = new TrajectoryIterator<TimedState<Pose2dWithCurvature>>(view);
 }
 
