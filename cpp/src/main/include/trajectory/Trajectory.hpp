@@ -21,8 +21,15 @@ namespace ck
             IndexView<S> index_view_;
 
         public:
-            Trajectory() : points_(), index_view_(*this) {}
-            Trajectory(std::vector<S> &states) : points_(), index_view_(*this)
+            Trajectory()
+                : points_(),
+                  index_view_(*this)
+            {
+            }
+
+            Trajectory(std::vector<S> &states)
+                : points_(),
+                  index_view_(*this)
             {
                 points_.reserve(states.size());
                 for (int i = 0; i < (int)states.size(); ++i)
@@ -30,12 +37,14 @@ namespace ck
                     points_.push_back(TrajectoryPoint<S>{states[i], i});
                 }
             }
-            bool isEmpty() { return points_.empty(); }
+
+            bool isEmpty() {return points_.empty(); }
             int length() { return points_.size(); }
             TrajectoryPoint<S> getPoint(int index) { return points_[index]; }
             S getState(int index) { return points_[index].state_; }
             S getFirstState() { return getState(0); }
             S getLastState() { return getState(length() - 1); }
+
             TrajectorySamplePoint<S> getInterpolated(double index)
             {
                 if (isEmpty())

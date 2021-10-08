@@ -22,30 +22,47 @@ namespace ck
             double end_t_;
 
         public:
-            TimedView(Trajectory<ck::trajectory::timing::TimedState<S>> &traj) : trajectory_(&traj), start_t_(traj.getState(0).t()), end_t_(traj.getState(traj.length() - 1).t()) {}
+            TimedView(Trajectory<ck::trajectory::timing::TimedState<S>> &traj)
+                : trajectory_(&traj),
+                  start_t_(traj.getState(0).t()),
+                  end_t_(traj.getState(traj.length() - 1).t())
+            {
+                
+            }
+
             double first_interpolant() const override { return start_t_; }
             double last_interpolant() const override { return end_t_; }
+
+            /*
+            TrajectorySamplePoint<ck::trajectory::timing::TimedState<S>> sample(double t) override
+            {
+                return TrajectorySamplePoint<ck::trajectory::timing::TimedState<S>>(
+                    trajectory_->getPoint(trajectory_->length() - 1)
+                    );
+            }
+            */
+
             TrajectorySamplePoint<ck::trajectory::timing::TimedState<S>> sample(double t) override
             {
                 if (t >= end_t_)
                 {
-                    return TrajectorySamplePoint<S>(trajectory_->getPoint(trajectory_->length() - 1));
+                    return TrajectorySamplePoint<ck::trajectory::timing::TimedState<S>>(trajectory_->getPoint(trajectory_->length() - 1));
                 }
                 if (t <= start_t_)
                 {
-                    return TrajectorySamplePoint<S>(trajectory_->getPoint(0));
+                    return TrajectorySamplePoint<ck::trajectory::timing::TimedState<S>>(trajectory_->getPoint(0));
                 }
                 for (int i = 1; i < trajectory_->length(); ++i)
                 {
                     TrajectoryPoint<ck::trajectory::timing::TimedState<S>> s = trajectory_->getPoint(i);
-                    if (s.state().t() >= t)
+                    if (s.state_.t() >= t)
                     {
                         TrajectoryPoint<ck::trajectory::timing::TimedState<S>> prev_s = trajectory_->getPoint(i - 1);
-                        if (ck::math::epsilonEquals(s.state().t(), prev_s.state().t()))
+                        if (ck::math::epsilonEquals(s.state_.t(), prev_s.state_.t()))
                         {
-                            return TrajectorySamplePoint<S>(s);
+                            return TrajectorySamplePoint<ck::trajectory::timing::TimedState<S>>(s);
                         }
-                        return TrajectorySamplePoint<S>(prev_s.state().interpolate(s.state(), (t - prev_s.state().t()) / (s.state().t() - prev_s.state().t())), i - 1, i);
+                        return TrajectorySamplePoint<ck::trajectory::timing::TimedState<S>>(prev_s.state_.interpolate(s.state_, (t - prev_s.state_.t()) / (s.state_.t() - prev_s.state_.t())), i - 1, i);
                     }
                 }
                 throw;
