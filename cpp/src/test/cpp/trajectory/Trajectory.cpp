@@ -19,7 +19,6 @@ static std::vector<ck::geometry::Translation2d> kWaypoints =
 
 
 TEST(TrajTest, Construction){
-
     ck::trajectory::Trajectory<ck::geometry::Translation2d> traj =
         ck::trajectory::Trajectory<ck::geometry::Translation2d>();
 

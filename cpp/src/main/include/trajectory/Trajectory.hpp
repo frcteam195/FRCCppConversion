@@ -37,8 +37,13 @@ namespace ck
                 }
             }
 
-            Trajectory& operator=( Trajectory in ){
+            Trajectory( const Trajectory& in ) : Trajectory() {
                 points_ = in.points_;
+            }
+
+            Trajectory& operator=( const Trajectory& in ){
+                points_ = in.points_;
+                return *this;
             }
 
             bool isEmpty() {return points_.empty();}
