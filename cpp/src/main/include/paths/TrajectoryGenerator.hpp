@@ -1,5 +1,6 @@
 #pragma once
 
+#include "plannners/DriveMotionPlanner.hpp"
 #include "paths/MirroredTrajectory.hpp"
 #include "utils/Singleton.hpp"
 
@@ -9,15 +10,15 @@ namespace ck
     {
         class TrajectorySet
         {
-            public:
-                paths::MirroredTrajectory* test90DegPath;
+        public:
+            paths::MirroredTrajectory *test90DegPath;
 
-                TrajectorySet(void);
+            TrajectorySet(void);
         };
 
         class TrajectoryGenerator : public Singleton<TrajectoryGenerator>
         {
-        friend Singleton;
+            friend Singleton;
 
         private:
             // static const double kMaxVoltage = 9.0;
@@ -30,12 +31,22 @@ namespace ck
 
             // static const double kMaxCentripetalAccel = 100.0;
 
-            TrajectorySet mTrajectorySet;
+            planners::DriveMotionPlanner *mMotionPlanner = NULL;
+            TrajectorySet *mTrajectorySet = NULL;
 
             TrajectoryGenerator(void);
-        
+
         public:
-            TrajectorySet getTrajectorySet(void);
+            MirroredTrajectory generateMirroredTrajectory(bool reversed,
+                                                          std::vector<geometry::Pose2d> waypoints,
+                                                          /* TODO: Implement Timing Constraint, */
+                                                          double maximumVelocity,
+                                                          double maximumAcceleration,
+                                                          double maximumVoltage);
+
+            void generateTrajectories(void);
+
+            TrajectorySet *getTrajectorySet(void);
         };
 
     } // namespace paths

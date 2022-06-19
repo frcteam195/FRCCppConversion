@@ -25,9 +25,9 @@ namespace ck
                 double abs_voltage_limit_;
 
             public:
-                DifferentialDriveDynamicsConstraint(DifferentialDrive &drive, double abs_voltage_limit) : drive_(&drive), abs_voltage_limit_(abs_voltage_limit) {}
+                DifferentialDriveDynamicsConstraint(physics::DifferentialDrive &drive, double abs_voltage_limit) : drive_(&drive), abs_voltage_limit_(abs_voltage_limit) {}
 
-                double getMaxVelocity(const S &state) const override
+                double getMaxVelocity(const S &state) const
                 {
                     return ck::math::meters_to_inches(drive_->getMaxAbsVelocity(
                         ck::math::meters_to_inches(state.getCurvature()), // Curvature is in inverse inches, so meters_to_inches is correct.

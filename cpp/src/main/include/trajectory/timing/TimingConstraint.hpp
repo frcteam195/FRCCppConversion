@@ -72,6 +72,9 @@ namespace ck
                             return ck::math::POS_INF;
                             break;
                     }
+
+                    // Default return to suppress [-Wreturn-type].
+                    return 0.0;
                 }
                 
                 MinMaxAcceleration getMinMaxAcceleration(const S &state, double velocity) const
@@ -95,6 +98,9 @@ namespace ck
                             return MinMaxAcceleration(-10.0, 10.0 / velocity);
                             break;
                     }
+
+                    // Default return to suppress [-Wreturn-type].
+                    return MinMaxAcceleration::kNoLimits;
                 }
 
             private: 

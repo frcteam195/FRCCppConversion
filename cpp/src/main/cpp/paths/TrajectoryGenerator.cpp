@@ -4,19 +4,29 @@ namespace ck
 {
     namespace paths
     {
-        TrajectoryGenerator::TrajectoryGenerator(void)
-        {
-        }
-
         TrajectorySet::TrajectorySet(void)
         {
-            
+            // TODO: Fill with autos.
         }
 
-        TrajectorySet TrajectoryGenerator::getTrajectorySet(void)
+        TrajectoryGenerator::TrajectoryGenerator(void)
+        {
+            this->mMotionPlanner = new planners::DriveMotionPlanner(); 
+        }
+
+        void TrajectoryGenerator::generateTrajectories(void)
+        {
+            if (this->mTrajectorySet == NULL)
+            {
+                printf("Generating trajectories...");
+                mTrajectorySet = new TrajectorySet();
+                printf("Trajectory generation completed!");
+            }
+        }
+
+        TrajectorySet *TrajectoryGenerator::getTrajectorySet(void)
         {
             return this->mTrajectorySet;
         }
-
     } // namespace paths
 } // namespace ck
