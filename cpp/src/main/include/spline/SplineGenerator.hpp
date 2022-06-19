@@ -36,8 +36,8 @@ namespace ck
              */
             static std::vector<ck::geometry::Pose2dWithCurvature> parameterizeSpline(Spline &s);
             static std::vector<ck::geometry::Pose2dWithCurvature> parameterizeSpline(Spline &s, double maxDx, double maxDy, double maxDTheta);
-            static std::vector<ck::geometry::Pose2dWithCurvature> parameterizeSplines(std::vector<Spline> &splines);
-            static std::vector<ck::geometry::Pose2dWithCurvature> parameterizeSplines(std::vector<Spline> &splines, double maxDx, double maxDy, double maxDTheta);
+            static std::vector<ck::geometry::Pose2dWithCurvature> parameterizeSplines(std::vector<Spline *> &splines);
+            static std::vector<ck::geometry::Pose2dWithCurvature> parameterizeSplines(std::vector<Spline *> &splines, double maxDx, double maxDy, double maxDTheta);
         };
     } // namespace spline
 } // namespace ck

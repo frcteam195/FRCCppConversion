@@ -27,7 +27,7 @@ namespace ck
             }
 
             template <class S>
-            static Trajectory<timing::TimedState<S>> mirrorTimed(Trajectory<timing::TimedState<S>> trajectory)
+            static Trajectory<timing::TimedState<S> > mirrorTimed(Trajectory<timing::TimedState<S> > trajectory)
             {
                 std::vector<timing::TimedState<S>> waypoints;
 
@@ -41,12 +41,21 @@ namespace ck
             }
 
             template <class S>
-            static Trajectory<geometry::Pose2dWithCurvature> trajectoryFromSplines(std::vector<S> splines,
+            static Trajectory<geometry::Pose2dWithCurvature> trajectoryFromSplines(std::vector<S *> splines,
                                                                                    double maxDx,
                                                                                    double maxDy,
                                                                                    double maxDtheta)
             {
-                return Trajectory<geometry::Pose2dWithCurvature>(spline::SplineGenerator::parameterizeSplines(splines, maxDx, maxDy, maxDtheta));
+                std::vector<spline::Spline *> newSplines;
+
+                for (S *s : splines)
+                {
+                    newSplines.push_back(static_cast<spline::Spline *>(s));
+                }
+                
+                std::vector<ck::geometry::Pose2dWithCurvature> pSplines = spline::SplineGenerator::parameterizeSplines(newSplines, maxDx, maxDy, maxDtheta);
+
+                return Trajectory<geometry::Pose2dWithCurvature>(pSplines);
             }
 
             static Trajectory<geometry::Pose2dWithCurvature> trajectoryFromSplineWaypoints(std::vector<geometry::Pose2d> waypoints,

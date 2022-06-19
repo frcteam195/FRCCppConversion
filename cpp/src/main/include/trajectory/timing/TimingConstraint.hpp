@@ -83,11 +83,13 @@ namespace ck
                     {
                         case ConstraintType::NONE:
                             // Never gets called
-                            return MinMaxAcceleration::kNoLimits;
+                            // return MinMaxAcceleration::kNoLimits;
+                            return MinMaxAcceleration();
                             break;
 
                         case ConstraintType::VELOCITY_LIMIT_REGION:
-                            return MinMaxAcceleration::kNoLimits;
+                            // return MinMaxAcceleration::kNoLimits;
+                            return MinMaxAcceleration();
                             break;
 
                         case ConstraintType::CONDITIONAL_VELOCITY:
@@ -100,7 +102,8 @@ namespace ck
                     }
 
                     // Default return to suppress [-Wreturn-type].
-                    return MinMaxAcceleration::kNoLimits;
+                    // return MinMaxAcceleration::kNoLimits;
+                    return MinMaxAcceleration();
                 }
 
             private: 

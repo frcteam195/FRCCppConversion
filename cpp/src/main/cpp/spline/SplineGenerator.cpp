@@ -45,12 +45,12 @@ namespace ck
             return parameterizeSpline(s, maxDx, maxDy, maxDTheta, 0.0, 1.0);
         }
 
-        std::vector<ck::geometry::Pose2dWithCurvature> SplineGenerator::parameterizeSplines(std::vector<Spline> &splines)
+        std::vector<ck::geometry::Pose2dWithCurvature> SplineGenerator::parameterizeSplines(std::vector<Spline *> &splines)
         {
             return parameterizeSplines(splines, kMaxDX, kMaxDY, kMaxDTheta);
         }
 
-        std::vector<ck::geometry::Pose2dWithCurvature> SplineGenerator::parameterizeSplines(std::vector<Spline> &splines, double maxDx, double maxDy, double maxDTheta)
+        std::vector<ck::geometry::Pose2dWithCurvature> SplineGenerator::parameterizeSplines(std::vector<Spline *> &splines, double maxDx, double maxDy, double maxDTheta)
         {
             std::vector<ck::geometry::Pose2dWithCurvature> rv;
             if (splines.empty())
@@ -58,10 +58,10 @@ namespace ck
                 return rv;
             }
 
-            rv.push_back(splines[0].getPose2dWithCurvature(0.0));
-            for (Spline &s : splines)
+            rv.push_back(splines[0]->getPose2dWithCurvature(0.0));
+            for (Spline *s : splines)
             {
-                std::vector<ck::geometry::Pose2dWithCurvature> samples = parameterizeSpline(s, maxDx, maxDy, maxDTheta);
+                std::vector<ck::geometry::Pose2dWithCurvature> samples = parameterizeSpline(*s, maxDx, maxDy, maxDTheta);
                 samples.erase(samples.begin());
 
                 rv.insert(rv.end(), samples.begin(), samples.end());

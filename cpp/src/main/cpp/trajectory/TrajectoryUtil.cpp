@@ -9,11 +9,11 @@ namespace ck
                                                                                                 double maxDy,
                                                                                                 double maxDtheta)
         {
-            std::vector<spline::QuinticHermiteSpline> splines;
+            std::vector<spline::QuinticHermiteSpline *> splines;
 
             for (size_t i = 1; i < waypoints.size(); ++i)
             {
-                splines.push_back(spline::QuinticHermiteSpline(waypoints[i - 1], waypoints[i]));
+                splines.push_back(new spline::QuinticHermiteSpline(waypoints[i - 1], waypoints[i]));
             }
 
             spline::QuinticHermiteSpline::optimizeSpline(splines);
