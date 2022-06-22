@@ -12,7 +12,9 @@
 #include "trajectory/timing/TimedState.hpp"
 #include "utils/Singleton.hpp"
 #include "utils/Subsystem.hpp"
+#include "utils/drivers/CKTalonFX.hpp"
 
+#include <atomic>
 #include <mutex>
 
 using namespace ck::geometry;
@@ -50,13 +52,19 @@ public:
     void onLoop(double timestamp) override;
     std::string getName() override;
 
-    bool isDoneWithTrajectory();
+    bool isDoneWithTrajectory(void);
 
-    double getLeftEncoderDistance();
-    double getRightEncoderDistance();
-    double getRightLinearVelocity();
-    double getLeftLinearVelocity();
-    double getLinearVelocity();
+    void forceBrakeModeUpdate(void);
+    bool isBrakeMode(void)
+    void setBrakeMode(bool brake);
+
+    double getLeftEncoderDistance(void);
+    double getRightEncoderDistance(void);
+    double getRightLinearVelocity(void);
+    double getLeftLinearVelocity(void);
+    double getLinearVelocity(void);
+
+    void updatePathFollower(void);
 
     void setDriveControlState(DriveControlState driveControlState);
     void setOverrideTrajectory(bool value);
@@ -67,23 +75,35 @@ public:
 
 private:
     Drive();
+    ctre::
+    CKTalonFX *mLeftMaster;
+    CKTalonFX *mRightMaster;
+    CKTalonFX *mLeftSlave;
+    CKTalonFX *mRightSlave;
     DriveControlState mDriveControlState;
     DriveMotionPlanner *mMotionPlanner;
 
+    Rotation2d mGyroOffset = Rotation2d::identity();
     bool mOverrideTrajectory = false;
+
+    std::atomic_bool mIsBrakeMode = false;
+    std::atomic_bool mForceBrakeUpdate = false;
+    bool mPreviousBrakeMode;
 
     static DataReporter *logReporter;
     std::mutex memberAccessMtx;
 
-    Rotation2d mGyroOffset = Rotation2d::identity();
+    const ElapsedTimer *loopTimer = new ElapsedTimer();
+    const ElapsedTimer *driveLoopTimer = new ElapsedTimer();
 
     static double inchesToRotations(double inches);
+    static double radiansPerSecondToRpm(double radiansPerSecond);
     static double rotationsToInches(double rotations);
 
     class PeriodicIO
     {
     public:
-        PeriodicIO();
+        PeriodicIO() {};
 
         double leftPositionRotations;
         double rightPositionRotations;

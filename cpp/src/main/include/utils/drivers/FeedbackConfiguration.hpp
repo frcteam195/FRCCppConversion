@@ -56,4 +56,4 @@ namespace ck {
 			this->motionMagicSCurveStrength = sCurveStrength;
 		};
 	};
-};
+}

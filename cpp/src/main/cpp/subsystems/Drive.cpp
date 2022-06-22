@@ -1,5 +1,7 @@
 #include "subsystems/Drive.hpp"
 
+#include "utils/DriveSignal.hpp"
+
 DataReporter *Drive::logReporter = &NetworkDataReporter::getInstance();
 
 Drive::Drive()
@@ -40,6 +42,11 @@ void Drive::registerEnabledLoops(ILooper &enabledLooper)
 double Drive::inchesToRotations(double inches)
 {
     return inches / (K_DRIVE_WHEEL_DIAMETER_INCHES * M_PI);
+}
+
+double Drive::radiansPerSecondToRpm(double radiansPerSecond)
+{
+    return radiansPerSecond / (2.0 * M_PI) * 60.0;
 }
 
 double Drive::rotationsToInches(double rotations)
@@ -126,8 +133,53 @@ void Drive::setHeading(Rotation2d heading)
     mPeriodicIO.gyroHeading = heading;
 }
 
-Drive::PeriodicIO::PeriodicIO()
+void Drive::forceBrakeModeUpdate(void)
 {
-    // left_position_rotations = 3;
-    // right_position_rotations = 4;
+    mForceBrakeUpdate = true;
+}
+
+bool Drive::isBrakeMode(void)
+{
+    return mIsBrakeMode;
+}
+
+void Drive::setBrakeMode(bool brake)
+{
+    mIsBrakeMode = brake;
+}
+
+void Drive::updatePathFollower(void)
+{
+    if (mDriveControlState == PATH_FOLLOWING)
+    {
+        double currentPathFollowingTime = Timer.getFPGATimestamp();
+
+        Output motionPlannerOutput = mMotionPlanner.update(currentPathFollowingTime, RobotState.getInstance().getFieldToVehicle(currPathFollowingTime));
+
+        utils::DriveSignal pathVelocityWheelContainer = utils::DriveSignal(0, 0);
+        utils::DriveSignal pathFeedForwardWheelContainer = utils::DriveSignal(0, 0);
+
+        mPeriodicIO.error = mMotionPlanner.error();
+        mPeriodicIO.pathSetpoint = mMotionPlanner.setpoint();
+
+        if (!mOverrideTrajectory)
+        {
+            pathVelWheelContainer.set(radiansPerSecondToRPM(motionPlannerOutput.left_velocity) * CalConstants.kDriveGearRatioMotorConversionFactor,
+            //                           radiansPerSecondToRPM(motionPlannerOutput.right_velocity) * CalConstants.kDriveGearRatioMotorConversionFactor);
+            // pathFFWheelContainer.set(motionPlannerOutput.left_feedforward_voltage / 12.0,
+            //                          motionPlannerOutput.right_feedforward_voltage / 12.0);
+            // setVelocity(pathVelWheelContainer, pathFFWheelContainer);
+
+            mPeriodicIO.mLeftAcceleration = radiansPerSecondToRpm(motionPlannerOutput.mLeftAcceleration) / 1000.0;
+            mPeriodicIO.mRightAcceleration = radiansPerSecondToRpm(motionPlannerOutput.mLeftAcceleration) / 1000.0;
+        }
+        else
+        {
+            // setVelocity(DriveSignal.BRAKE, DriveSignal.BRAKE);
+            mPeriodicIO.mLeftAcceleration = 0.0;
+            mPeriodicIO.mRightAcceleration = 0.0;
+        }
+        // } else {
+        // 	ConsoleReporter.report("Drive is not in path following state", MessageLevel.ERROR);
+    }
 }
