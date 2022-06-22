@@ -10,6 +10,38 @@ namespace ck
 {
     namespace planners
     {
+        Output::Output(double leftVelocity,
+                   double rightVelocity,
+                   double leftAcceleration,
+                   double rightAcceleration,
+                   double leftFeedForwardVoltage,
+                   double rightFeedForwardVoltage)
+        {
+            mLeftVelocity = leftVelocity;
+            mRightVelocity = rightVelocity;
+
+            mLeftAcceleration = leftAcceleration;
+            mRightAcceleration = rightAcceleration;
+
+            mLeftFeedForwardVoltage = leftFeedForwardVoltage;
+            mRightFeedForwardVoltage = rightFeedForwardVoltage;
+        }
+
+        void Output::flip(void)
+        {
+            double tempLeftVelocity = mLeftVelocity;
+            mLeftVelocity = -mRightVelocity;
+            mRightVelocity = -tempLeftVelocity;
+
+            double tempLeftAcceleration = mLeftAcceleration;
+            mLeftAcceleration = -mRightAcceleration;
+            mRightAcceleration = -tempLeftAcceleration;
+
+            double tempLeftFeedForwardVoltage = mLeftFeedForwardVoltage;
+            mLeftFeedForwardVoltage = -mRightFeedForwardVoltage;
+            mRightFeedForwardVoltage = -tempLeftFeedForwardVoltage;
+        }
+
         DriveMotionPlanner::DriveMotionPlanner(void)
         {
             double wheelRadiusMeters = math::inches_to_meters(K_DRIVE_WHEEL_RADIUS_INCHES);
@@ -100,5 +132,43 @@ namespace ck
 
             return timedTrajectory;
         }
+
+        bool DriveMotionPlanner::isDone(void)
+        {
+            return mCurrentTrajectory != NULL && mCurrentTrajectory->isDone();
+        }
+
+        void DriveMotionPlanner::reset(void)
+        {
+            mError = geometry::Pose2d::identity();
+            mOutput = new Output();
+            mLastTime = ck::math::POS_INF_F;
+        }
+
+        void DriveMotionPlanner::setFollowerType(FollowerType type)
+        {
+            mFollowerType = type;
+        }
+
+        void DriveMotionPlanner::setTrajectory(trajectory::TrajectoryIterator<trajectory::timing::TimedState<geometry::Pose2dWithCurvature>> trajectory)
+        {
+            *mCurrentTrajectory = trajectory;
+            *mSetpoint = trajectory.getState();
+
+            for (int i = 0; i < trajectory.trajectory().length(); ++i)
+            {
+                if (trajectory.trajectory().getState(i).velocity() > ck::math::kEpsilon)
+                {
+                    mIsReversed = false;
+                    break;
+                }
+                else if (trajectory.trajectory().getState(i).velocity() < -ck::math::kEpsilon)
+                {
+                    mIsReversed = true;
+                    break;
+                }
+            }
+        }
+
     } // namespace planners
 } // namespace ck

@@ -12,6 +12,30 @@ namespace ck
 {
     namespace planners
     {
+        class Output
+        {
+        public:
+            Output() {}
+
+            Output(double leftVelocity,
+                   double rightVelocity,
+                   double leftAcceleration,
+                   double rightAcceleration,
+                   double leftFeedForwardVoltage,
+                   double rightFeedForwardVoltage);
+
+            double mLeftVelocity;  // Radians per Second
+            double mRightVelocity; // Radians per Second
+
+            double mLeftAcceleration;  // Radians per Second^2
+            double mRightAcceleration; // Radians per Second^2
+
+            double mLeftFeedForwardVoltage;
+            double mRightFeedForwardVoltage;
+
+            void flip(void);
+        };
+
         class DriveMotionPlanner
         {
         public:
@@ -40,8 +64,13 @@ namespace ck
                                                                                                                      double maximumVelocity, // Inches per Second
                                                                                                                      double maximumAcceleration, // Inches per Second^2
                                                                                                                      double maximumVoltage);
+            bool isDone(void);
 
-            void setFollowerType(FollowerType type) { mFollowerType = type; }
+            void reset(void);
+
+            void setFollowerType(FollowerType type);
+
+            void setTrajectory(trajectory::TrajectoryIterator<trajectory::timing::TimedState<geometry::Pose2dWithCurvature>> trajectory);
 
         private:
             static constexpr double kMaxDx = 2.0;
@@ -49,12 +78,17 @@ namespace ck
             static constexpr double kMaxDtheta = 0.0872665; // 5 Degrees
 
             trajectory::TrajectoryIterator<trajectory::timing::TimedState<geometry::Pose2dWithCurvature>> *mCurrentTrajectory = NULL;
-
+            trajectory::timing::TimedState<geometry::Pose2dWithCurvature> *mSetpoint = new trajectory::timing::TimedState<geometry::Pose2dWithCurvature>(geometry::Pose2dWithCurvature::identity());
+    
             FollowerType mFollowerType = FollowerType::NONLINEAR_FEEDBACK;
             
             bool mIsReversed = false;
 
             physics::DifferentialDrive *mModel;
+
+            geometry::Pose2d mError = geometry::Pose2d::identity();
+            double mLastTime = ck::math::POS_INF_F;
+            Output *mOutput = new Output();
         };
 
     } // namespace planners
