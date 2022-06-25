@@ -16,7 +16,7 @@ void Robot::RobotInit() {
         ck::paths::TrajectoryGenerator::getInstance().generateTrajectories();
 
         Drive::getInstance().zeroSensors();
-        RobotState::getInstance().reset(frc::Timer::GetFPGATimestamp(), Pose2d::identity());
+        RobotState::getInstance().reset(frc::Timer::GetFPGATimestamp().value(), Pose2d::identity());
     } catch (std::exception &ex) {
 
     }
